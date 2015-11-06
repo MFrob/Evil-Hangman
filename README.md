@@ -6,7 +6,6 @@ Evil-Hangman - In this project a version of a hangman game will be implemented, 
 List of features:
 - test
 - test
-- test
-<!-- test-->
+//- test
 
 Sketches of the complete user experience:
