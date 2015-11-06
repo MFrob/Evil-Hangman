@@ -12,4 +12,4 @@ List of features:
 
 
 Sketches of the complete user experience:<br/>
-![alt text](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png "sketches")
+![alt text](https://github.com/MFrob/Evil-Hangman/blob/master/Scan2.png "sketches")
