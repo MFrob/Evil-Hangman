@@ -7,7 +7,8 @@ List of features:
 - The language of the app is consistent
 - The layout is simple and understandable
 - The game is fun to play
-- The app is monotonous
+- There is a money system, during a game the user can spend money to make that game easier.
+- The interface of the app is monotonous
 
 
 Sketches of the complete user experience:<br/>
