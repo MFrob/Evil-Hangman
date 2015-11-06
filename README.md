@@ -9,5 +9,6 @@ List of features:
 - The game is fun to play
 - The app is monotonous
 
+
 Sketches of the complete user experience:<br/>
 ![alt text](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png "sketches")
