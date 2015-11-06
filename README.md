@@ -7,6 +7,6 @@ List of features:
 - test
 - test
 - test
-<!--- test-->
+<!-- test-->
 
 Sketches of the complete user experience:
