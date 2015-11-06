@@ -1,2 +1,2 @@
-Mees Fröberg <mees.froberg@student.uva.nl>\\
+Mees Fröberg <mees.froberg@student.uva.nl><br/>
 Studentnumber: 10559949
