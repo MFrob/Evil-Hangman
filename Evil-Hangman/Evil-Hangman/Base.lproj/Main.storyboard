@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9060" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
+    </dependencies>
+    <scenes>
+        <!--Game-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" userLabel="Game" customClass="ViewController" customModule="Evil_Hangman" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
+                        <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="omj-Ot-h8W">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="50"/>
+                                <animations/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="JQK-7f-cm2"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleAspectFit" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kSu-Hl-mVj" userLabel="Drawing">
+                                <rect key="frame" x="20" y="51" width="560" height="307"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="1error" translatesAutoresizingMaskIntoConstraints="NO" id="LH5-u6-phw">
+                                        <rect key="frame" x="0.0" y="0.0" width="560" height="314"/>
+                                        <animations/>
+                                    </imageView>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="2error" translatesAutoresizingMaskIntoConstraints="NO" id="cB6-Rt-8DR">
+                                        <rect key="frame" x="0.0" y="0.0" width="560" height="314"/>
+                                        <animations/>
+                                    </imageView>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="3error" translatesAutoresizingMaskIntoConstraints="NO" id="bp8-w7-raq">
+                                        <rect key="frame" x="0.0" y="0.0" width="560" height="314"/>
+                                        <animations/>
+                                    </imageView>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="4error" translatesAutoresizingMaskIntoConstraints="NO" id="ZAJ-Ek-xxu">
+                                        <rect key="frame" x="0.0" y="0.0" width="560" height="314"/>
+                                        <animations/>
+                                    </imageView>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="5error" translatesAutoresizingMaskIntoConstraints="NO" id="jq6-ih-JCa">
+                                        <rect key="frame" x="0.0" y="0.0" width="560" height="314"/>
+                                        <animations/>
+                                    </imageView>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="6error" translatesAutoresizingMaskIntoConstraints="NO" id="yvq-ca-Q6i">
+                                        <rect key="frame" x="0.0" y="0.0" width="560" height="314"/>
+                                        <animations/>
+                                    </imageView>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="7error" translatesAutoresizingMaskIntoConstraints="NO" id="O5h-Y9-St1">
+                                        <rect key="frame" x="0.0" y="0.0" width="560" height="314"/>
+                                        <animations/>
+                                    </imageView>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="8error" translatesAutoresizingMaskIntoConstraints="NO" id="saX-sg-lLP">
+                                        <rect key="frame" x="0.0" y="0.0" width="560" height="314"/>
+                                        <animations/>
+                                    </imageView>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="9error" translatesAutoresizingMaskIntoConstraints="NO" id="7Me-iG-vX0">
+                                        <rect key="frame" x="0.0" y="0.0" width="560" height="314"/>
+                                        <animations/>
+                                    </imageView>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="10error" translatesAutoresizingMaskIntoConstraints="NO" id="F9x-Wt-Ru9">
+                                        <rect key="frame" x="0.0" y="0.0" width="560" height="314"/>
+                                        <animations/>
+                                    </imageView>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="11error" translatesAutoresizingMaskIntoConstraints="NO" id="n8z-mM-tPz">
+                                        <rect key="frame" x="0.0" y="0.0" width="560" height="314"/>
+                                        <animations/>
+                                    </imageView>
+                                </subviews>
+                                <animations/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="_ _ _ _" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cv4-yw-U69">
+                                <rect key="frame" x="168" y="366" width="265" height="35"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="omj-Ot-h8W" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="eLy-N3-Elj"/>
+                            <constraint firstAttribute="trailing" secondItem="omj-Ot-h8W" secondAttribute="trailing" id="g1T-Xx-tBP"/>
+                            <constraint firstItem="omj-Ot-h8W" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="gZ2-S6-KDL"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="305" y="429"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="10error" width="500" height="500"/>
+        <image name="11error" width="500" height="500"/>
+        <image name="1error" width="500" height="500"/>
+        <image name="2error" width="500" height="500"/>
+        <image name="3error" width="500" height="500"/>
+        <image name="4error" width="500" height="500"/>
+        <image name="5error" width="500" height="500"/>
+        <image name="6error" width="500" height="500"/>
+        <image name="7error" width="500" height="500"/>
+        <image name="8error" width="500" height="500"/>
+        <image name="9error" width="500" height="500"/>
+    </resources>
+</document>
