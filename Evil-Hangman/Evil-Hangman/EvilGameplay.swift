@@ -9,20 +9,16 @@
 import Foundation
 
 class EvilGameplay : Gameplay {
-    private var possibleWords:[String]
-    private var wordLength:Int
     
     // Initialize the GoodGameplay class.
     override init() {
-        wordLength = 0
-        possibleWords = [String]()
         super.init()
     }
     
     // Start a new game.
     override func newGame() {
-        pickPossibleWords()
-        super.display = [Character](count: wordLength, repeatedValue: "_")
+        let wordLength = pickPossibleWords()
+        display = [Character](count: wordLength, repeatedValue: "_")
     }
     
     // Handles the input and returns true if the guess was correct and false otherwise.
@@ -31,7 +27,7 @@ class EvilGameplay : Gameplay {
         var correctDisplay = [Int:[Character]]()
         
         for word in possibleWords {
-            var newDisplay = super.display
+            var newDisplay = display
             var correct = 0
             if word.characters.contains(input) {
                 var index = 0
@@ -54,27 +50,28 @@ class EvilGameplay : Gameplay {
         }
         
         let best = Array(correctDisplay.keys).minElement()
-        super.display = correctDisplay[best!]!
-        possibleWords = displayWords[String(super.display)]!
+        display = correctDisplay[best!]!
+        possibleWords = displayWords[String(display)]!
         if best == 0 {
             return false
         }
         return true
     }
     
-    override func getCorrectWord() -> String {
-        return possibleWords[0]
-    }
-    
     // Select a random word from the corpus.s
-    func pickPossibleWords() {
+    func pickPossibleWords() -> Int {
         possibleWords = []
-        //wordLength = Int(arc4random_uniform(UInt32(super.maxWordLength)))
-        wordLength = 3
-        for word in super.corpus {
+        //let wordLength = Int(arc4random_uniform(UInt32(maxWordLength)))
+        let wordLength = 3
+        for word in corpus {
             if word.characters.count == wordLength {
                 possibleWords.append(word)
             }
         }
+        return wordLength
+    }
+    
+    func getPossibleWords() -> [String] {
+        return possibleWords
     }
 }

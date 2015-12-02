@@ -14,37 +14,46 @@ class Game {
 	private var gameplay:Gameplay
     private var guesses:[Int]
     private var money:Int
-    private var highScores:[String:[String]]
+    private var highscores:[String:[String:Int]]
     private var currentGameType:String
     private var gameTypeChanged:Bool
+    private var defaults:NSUserDefaults
 	
 	// Initialze the Game class.
     init(defaults:NSUserDefaults) {
-        gameplay = EvilGameplay()
-        guesses = [0,0]
-        money = 100
-        highScores = ["GoodGameplay": [], "EvilGameplay": []]
-        currentGameType = "GoodGameplay"
-        gameTypeChanged = false
+        self.defaults = defaults
+        if defaults.stringForKey("currentGameType") != nil {
+            
+            guesses = defaults.arrayForKey("guesses") as! [Int]
+            money = defaults.integerForKey("money")
+            highscores = defaults.dictionaryForKey("highscores") as! [String:[String:Int]]
+            currentGameType = defaults.stringForKey("currentGameType")!
+            gameTypeChanged = defaults.boolForKey("gameTypeChanged")
+            
+            if currentGameType == "GoodGameplay" {
+                gameplay = GoodGameplay()
+            } else {
+                gameplay = EvilGameplay()
+            }
+        } else {
+        	gameplay = GoodGameplay()
+            guesses = [0,0]
+        	money = 100
+            highscores = ["GoodGameplay": [String:Int](), "EvilGameplay": [String:Int]()]
+        	currentGameType = "GoodGameplay"
+        	gameTypeChanged = false
+            
+            initializeDefaults()
+        }
 	}
     
-    
-    init(word:String, display:[Character], maxWordLength:Int, guesses:[Int], money:Int, highScores:[String:[String]]) {
-        gameplay = GoodGameplay(word: word, display: display, maxWordLength: maxWordLength)
-        self.guesses = guesses
-        self.money = money
-        self.highScores = highScores
-        currentGameType = "GoodGameplay"
-        gameTypeChanged = false
-    }
-    
-    init(possibleWords:String, display:[Character], maxWordLength:Int, guesses:[Int], money:Int, highScores:[String:[String]]) {
-        gameplay = GoodGameplay(word: word, display: display, maxWordLength: maxWordLength)
-        self.guesses = guesses
-        self.money = money
-        self.highScores = highScores
-        currentGameType = "GoodGameplay"
-        gameTypeChanged = false
+    private func initializeDefaults() {
+        defaults.setObject(guesses, forKey: "guesses")
+        defaults.setInteger(money, forKey: "money")
+        defaults.setObject(highscores, forKey: "highscores")
+        defaults.setObject(currentGameType, forKey: "currentGameType")
+        defaults.setBool(gameTypeChanged, forKey: "gameTypeChanged")
+        defaults.setObject([String](), forKey: "actions")
     }
     
 	// Start a new game.
@@ -58,18 +67,28 @@ class Game {
                 gameplay = GoodGameplay()
                 currentGameType = "GoodGameplay"
             }
+            gameTypeChanged = false
+            defaults.setBool(gameTypeChanged, forKey: "gameTypeChanged")
+            defaults.setObject(currentGameType, forKey: "currentGameType")
         } else {
 			gameplay.newGame()
         }
+        defaults.setObject(guesses, forKey: "guesses")
+        defaults.setObject([String](), forKey: "actions")
 	}
 	
 	// Handle the given input of the user. Returns true if the input is correct else false
 	func handleInput(input:String) -> Bool {
+        var actions = defaults.arrayForKey("actions") as! [String]
+        actions.append(input)
+        defaults.setObject(actions, forKey: "actions")
 		if gameplay.handleInput(Character(input.lowercaseString)) {
 			guesses[0] = guesses[0] + 1
+            defaults.setObject(guesses, forKey: "guesses")
             return true
 		}
         guesses[1] = guesses[1] + 1
+        defaults.setObject(guesses, forKey: "guesses")
         return false
 	}
     
@@ -91,29 +110,29 @@ class Game {
         } else {
             gameTypeChanged = true
         }
+        defaults.setBool(gameTypeChanged, forKey: "gameTypeChanged")
     }
-	
-	// Return the current display of the game.
-	func getDisplay() -> String {
-        var display = ""
-        var index = 0
-        for char in gameplay.getDisplay() {
-            if index == gameplay.getDisplay().count-1 {
-                display = display + String(char)
-            } else {
-                display = display + String(char) + " "
-            }
-            index = index + 1
-        }
-        return display
-	}
     
     func addMoney(madeMoney:Int) {
         money = money + madeMoney
+        defaults.setInteger(money, forKey: "money")
+    }
+    
+    func spendMoney(spentMoney:Int) -> Bool {
+        if money - spentMoney >= 0 {
+        	money = money - spentMoney
+        	defaults.setInteger(money, forKey: "money")
+            return true
+        }
+        return false
     }
     
     func eraseError() {
         guesses[1] = guesses[1] - 1
+        var actions = defaults.arrayForKey("actions") as! [String]
+        actions.append("erase")
+        defaults.setObject(actions, forKey: "actions")
+        defaults.setObject(guesses, forKey: "guesses")
     }
 	
     // Return the number of wrong guesses the user made.
@@ -126,7 +145,32 @@ class Game {
 		return guesses[1]
 	}
     
+    // Return the current display of the game.
+    func getDisplay() -> String {
+        var display = ""
+        var index = 0
+        for char in gameplay.getDisplay() {
+            if index == gameplay.getDisplay().count-1 {
+                display = display + String(char)
+            } else {
+                display = display + String(char) + " "
+            }
+            index = index + 1
+        }
+        return display.uppercaseString
+    }
+    
     func getCorrectWord() -> String {
-        return gameplay.getCorrectWord()
+        var display = ""
+        var index = 0
+        for char in gameplay.getCorrectWord().characters {
+            if index == gameplay.getCorrectWord().characters.count-1 {
+                display = display + String(char)
+            } else {
+                display = display + String(char) + " "
+            }
+            index = index + 1
+        }
+        return display.uppercaseString
     }
 }

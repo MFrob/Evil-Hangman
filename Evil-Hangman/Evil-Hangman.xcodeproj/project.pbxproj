@@ -8,8 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		5214B9B21C0EF365001CFBFC /* EvilGameplay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5214B9B11C0EF365001CFBFC /* EvilGameplay.swift */; };
-		5214B9B81C0F3D7E001CFBFC /* FinishViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5214B9B71C0F3D7E001CFBFC /* FinishViewController.swift */; };
 		5214B9BA1C0F4689001CFBFC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5214B9B91C0F4689001CFBFC /* Main.storyboard */; };
+		5214B9BC1C0F9049001CFBFC /* FinishViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5214B9BB1C0F9049001CFBFC /* FinishViewController.swift */; };
 		5246A9031BFE2C920061E9BE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5246A9021BFE2C920061E9BE /* AppDelegate.swift */; };
 		5246A9051BFE2C920061E9BE /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5246A9041BFE2C920061E9BE /* GameViewController.swift */; };
 		5246A90A1BFE2C920061E9BE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5246A9091BFE2C920061E9BE /* Assets.xcassets */; };
@@ -21,8 +21,8 @@
 
 /* Begin PBXFileReference section */
 		5214B9B11C0EF365001CFBFC /* EvilGameplay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EvilGameplay.swift; sourceTree = "<group>"; };
-		5214B9B71C0F3D7E001CFBFC /* FinishViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FinishViewController.swift; path = ../FinishViewController.swift; sourceTree = "<group>"; };
 		5214B9B91C0F4689001CFBFC /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = ../../../../../.Trash/Main.storyboard; sourceTree = "<group>"; };
+		5214B9BB1C0F9049001CFBFC /* FinishViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FinishViewController.swift; sourceTree = "<group>"; };
 		5246A8FF1BFE2C920061E9BE /* Evil-Hangman.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Evil-Hangman.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5246A9021BFE2C920061E9BE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5246A9041BFE2C920061E9BE /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
@@ -70,7 +70,7 @@
 				5214B9B11C0EF365001CFBFC /* EvilGameplay.swift */,
 				5246A9021BFE2C920061E9BE /* AppDelegate.swift */,
 				5246A9041BFE2C920061E9BE /* GameViewController.swift */,
-				5214B9B71C0F3D7E001CFBFC /* FinishViewController.swift */,
+				5214B9BB1C0F9049001CFBFC /* FinishViewController.swift */,
 				5214B9B91C0F4689001CFBFC /* Main.storyboard */,
 				5246A9091BFE2C920061E9BE /* Assets.xcassets */,
 				5246A90B1BFE2C920061E9BE /* LaunchScreen.storyboard */,
@@ -153,7 +153,7 @@
 				5246A9051BFE2C920061E9BE /* GameViewController.swift in Sources */,
 				5214B9B21C0EF365001CFBFC /* EvilGameplay.swift in Sources */,
 				526E05791BFE5BD000E8B797 /* Game.swift in Sources */,
-				5214B9B81C0F3D7E001CFBFC /* FinishViewController.swift in Sources */,
+				5214B9BC1C0F9049001CFBFC /* FinishViewController.swift in Sources */,
 				526E057A1BFE5BD000E8B797 /* GoodGameplay.swift in Sources */,
 				526E057C1BFE5BED00E8B797 /* Gameplay.swift in Sources */,
 				5246A9031BFE2C920061E9BE /* AppDelegate.swift in Sources */,

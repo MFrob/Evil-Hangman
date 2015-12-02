@@ -12,18 +12,22 @@ class Gameplay {
 	internal var display:[Character]
     internal var maxWordLength:Int
 	internal var corpus:[String]
+    internal var possibleWords:[String]
 	
 	// Initialize the Gameplay class.
 	init() {
 		display = [Character]()
         maxWordLength = 6
 		corpus = ["dit","is","een","test","corpus"]
+        possibleWords = [String]()
+        newGame()
 	}
     
     init(display:[Character], maxWordLength:Int) {
         self.display = display
         self.maxWordLength = maxWordLength
         corpus = ["dit","is","een","test","corpus"]
+        possibleWords = [String]()
     }
 	
 	// Start a new game.
@@ -37,7 +41,7 @@ class Gameplay {
 	}
     
     func getCorrectWord() -> String {
-        preconditionFailure("This function must be overridden")
+        return possibleWords[0]
     }
 	
 	// Return the display.
