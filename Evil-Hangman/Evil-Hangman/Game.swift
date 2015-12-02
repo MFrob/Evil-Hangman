@@ -13,17 +13,45 @@ import Foundation
 class Game {
 	private var gameplay:Gameplay
     private var guesses:[Int]
+    private var money:Int
+    private var highScores:[String:[String]]
+    private var currentGameType:String
+    private var gameTypeChanged:Bool
 	
 	// Initialze the Game class.
 	init() {
-		gameplay = GoodGameplay()
-		guesses = [0,0]
+        gameplay = GoodGameplay()
+        guesses = [0,0]
+        money = 100
+        highScores = ["GoodGameplay": [], "EvilGameplay": []]
+        currentGameType = "GoodGameplay"
+        gameTypeChanged = false
 	}
-	
+    
+    
+    init(word:String, display:[Character], maxWordLength:Int, guesses:[Int], money:Int, highScores:[String:[String]]) {
+        gameplay = GoodGameplay(word: word, display: display, maxWordLength: maxWordLength)
+        self.guesses = guesses
+        self.money = money
+        self.highScores = highScores
+        currentGameType = "GoodGameplay"
+        gameTypeChanged = false
+    }
+    
 	// Start a new game.
 	func startNewGame() {
 		guesses = [0,0]
-		gameplay.newGame()
+        if gameTypeChanged {
+            if currentGameType == "GoodGameplay" {
+                gameplay = EvilGameplay()
+                currentGameType = "EvilGameplay"
+            } else {
+                gameplay = GoodGameplay()
+                currentGameType = "GoodGameplay"
+            }
+        } else {
+			gameplay.newGame()
+        }
 	}
 	
 	// Handle the given input of the user. Returns true if the input is correct else false
@@ -43,6 +71,14 @@ class Game {
 		}
 		return false
 	}
+    
+    func changeGameplay() {
+        if gameTypeChanged {
+            gameTypeChanged = false
+        } else {
+            gameTypeChanged = true
+        }
+    }
 	
 	// Return the current display of the game.
 	func getDisplay() -> String {
@@ -58,6 +94,14 @@ class Game {
         }
         return display
 	}
+    
+    func addMoney(madeMoney:Int) {
+        money = money + madeMoney
+    }
+    
+    func eraseError() {
+        guesses[1] = guesses[1] - 1
+    }
 	
 	// Return the number of wrong guesses the user made.
 	func getWrongGuesses() -> Int {

@@ -17,6 +17,11 @@ class GoodGameplay : Gameplay {
         super.init()
 	}
 	
+    init(word:String, display:[Character], maxWordLength:Int) {
+        self.word = word
+        super.init(display: display, maxWordLength: maxWordLength)
+    }
+    
 	// Start a new game.
 	override func newGame() {
 		pickWord()
