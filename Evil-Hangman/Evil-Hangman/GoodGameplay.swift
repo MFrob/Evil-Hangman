@@ -42,6 +42,10 @@ class GoodGameplay : Gameplay {
         }
         return false
 	}
+    
+    override func getCorrectWord() -> String {
+        return word
+    }
 	
 	// Select a random word from the corpus.s
 	func pickWord() {

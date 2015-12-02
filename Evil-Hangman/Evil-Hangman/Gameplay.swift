@@ -35,6 +35,10 @@ class Gameplay {
 	func handleInput(input:Character) -> Bool {
         preconditionFailure("This function must be overridden")
 	}
+    
+    func getCorrectWord() -> String {
+        preconditionFailure("This function must be overridden")
+    }
 	
 	// Return the display.
 	func getDisplay() -> [Character] {

@@ -13,8 +13,10 @@ class GameViewController: UIViewController {
     let defaults = NSUserDefaults.standardUserDefaults()
     var game:Game!
     
-    // Label outlet.
+    // Label outlets.
     @IBOutlet weak var displayLabel: UILabel!
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var moneyLabel: UILabel!
     
     // Image outlets.
     @IBOutlet weak var errorImage1: UIImageView!
@@ -31,14 +33,13 @@ class GameViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        game = Game()
+        game = Game(defaults:defaults)
         game.startNewGame()
         /*if defaults.valueForKey("Game") == nil {
             game = Game()
             game.startNewGame()
             defaults.setObject(game, forKey: "Game")
             defaults.setValue([[UIButton]](count: 2, repeatedValue: [UIButton]()), forKey: "Buttons")
-            defaults.synchronize()
         } else {
             game = defaults.valueForKey("Game") as! Game
         }
@@ -106,5 +107,15 @@ class GameViewController: UIViewController {
         }
         displayLabel.text = game.getDisplay()
         button.enabled = false
+        if game.wonGame() || game.lostGame() {
+            self.performSegueWithIdentifier("finishedGame", sender: sender)
+        }
     }
+
+	override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "finishedGame" {
+            let destination = segue.destinationViewController as! FinishViewController
+            destination.game = game
+        }
+	}
 }

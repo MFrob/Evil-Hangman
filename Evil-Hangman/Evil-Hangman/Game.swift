@@ -19,7 +19,7 @@ class Game {
     private var gameTypeChanged:Bool
 	
 	// Initialze the Game class.
-	init() {
+    init(defaults:NSUserDefaults) {
         gameplay = EvilGameplay()
         guesses = [0,0]
         money = 100
@@ -30,6 +30,15 @@ class Game {
     
     
     init(word:String, display:[Character], maxWordLength:Int, guesses:[Int], money:Int, highScores:[String:[String]]) {
+        gameplay = GoodGameplay(word: word, display: display, maxWordLength: maxWordLength)
+        self.guesses = guesses
+        self.money = money
+        self.highScores = highScores
+        currentGameType = "GoodGameplay"
+        gameTypeChanged = false
+    }
+    
+    init(possibleWords:String, display:[Character], maxWordLength:Int, guesses:[Int], money:Int, highScores:[String:[String]]) {
         gameplay = GoodGameplay(word: word, display: display, maxWordLength: maxWordLength)
         self.guesses = guesses
         self.money = money
@@ -63,6 +72,10 @@ class Game {
         guesses[1] = guesses[1] + 1
         return false
 	}
+    
+    func wonGame() -> Bool {
+        return !getDisplay().containsString("_")
+    }
 	
 	// Check if the user lost the game.
 	func lostGame() -> Bool {
@@ -112,4 +125,8 @@ class Game {
 	func getWrongGuesses() -> Int {
 		return guesses[1]
 	}
+    
+    func getCorrectWord() -> String {
+        return gameplay.getCorrectWord()
+    }
 }
