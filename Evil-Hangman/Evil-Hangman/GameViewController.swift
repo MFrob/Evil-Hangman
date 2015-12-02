@@ -10,6 +10,7 @@ import UIKit
 
 class GameViewController: UIViewController {
     
+    let defaults = NSUserDefaults.standardUserDefaults()
     var game:Game!
     
     // Label outlet.
@@ -32,6 +33,27 @@ class GameViewController: UIViewController {
         super.viewDidLoad()
         game = Game()
         game.startNewGame()
+        /*if defaults.valueForKey("Game") == nil {
+            game = Game()
+            game.startNewGame()
+            defaults.setObject(game, forKey: "Game")
+            defaults.setValue([[UIButton]](count: 2, repeatedValue: [UIButton]()), forKey: "Buttons")
+            defaults.synchronize()
+        } else {
+            game = defaults.valueForKey("Game") as! Game
+        }
+        
+        let usedButtons = defaults.valueForKey("Buttons") as! [[UIButton]]
+        for button in usedButtons[0] {
+            button.backgroundColor = UIColor.greenColor()
+            button.enabled = false
+        }
+        
+        for button in usedButtons[1] {
+            button.backgroundColor = UIColor.redColor()
+            button.enabled = false
+        }*/
+        
         displayLabel.text = game.getDisplay()
         // Do any additional setup after loading the view, typically from a nib.
     }

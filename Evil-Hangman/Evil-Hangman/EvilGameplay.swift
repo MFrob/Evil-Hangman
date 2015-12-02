@@ -22,7 +22,9 @@ class EvilGameplay : Gameplay {
     // Start a new game.
     override func newGame() {
         pickPossibleWords()
+        print("pickedPossibleWords:"+String(possibleWords))
         super.display = [Character](count: wordLength, repeatedValue: "_")
+        print("super display:"+String(super.display))
     }
     
     // Handles the input and returns true if the guess was correct and false otherwise.
@@ -33,7 +35,6 @@ class EvilGameplay : Gameplay {
         for word in possibleWords {
             var newDisplay = super.display
             var correct = 0
-            
             if word.characters.contains(input) {
                 var index = 0
                 for char in word.characters {
@@ -67,7 +68,8 @@ class EvilGameplay : Gameplay {
     // Select a random word from the corpus.s
     func pickPossibleWords() {
         possibleWords = []
-        wordLength = Int(arc4random_uniform(UInt32(super.maxWordLength)))
+        //wordLength = Int(arc4random_uniform(UInt32(super.maxWordLength)))
+        wordLength = 3
         for word in super.corpus {
             if word.characters.count == wordLength {
                 possibleWords.append(word)

@@ -20,7 +20,7 @@ class Game {
 	
 	// Initialze the Game class.
 	init() {
-        gameplay = GoodGameplay()
+        gameplay = EvilGameplay()
         guesses = [0,0]
         money = 100
         highScores = ["GoodGameplay": [], "EvilGameplay": []]
@@ -56,7 +56,7 @@ class Game {
 	
 	// Handle the given input of the user. Returns true if the input is correct else false
 	func handleInput(input:String) -> Bool {
-		if gameplay.handleInput(Character(input)) {
+		if gameplay.handleInput(Character(input.lowercaseString)) {
 			guesses[0] = guesses[0] + 1
             return true
 		}
@@ -103,13 +103,13 @@ class Game {
         guesses[1] = guesses[1] - 1
     }
 	
-	// Return the number of wrong guesses the user made.
-	func getWrongGuesses() -> Int {
-		return guesses[1]
-	}
-    
     // Return the number of wrong guesses the user made.
     func getCorrectGuesses() -> Int {
         return guesses[0]
     }
+    
+	// Return the number of wrong guesses the user made.
+	func getWrongGuesses() -> Int {
+		return guesses[1]
+	}
 }
