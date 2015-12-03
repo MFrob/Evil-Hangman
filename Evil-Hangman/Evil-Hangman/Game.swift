@@ -17,11 +17,11 @@ class Game {
     private var highscores:[String:[String:Int]]
     private var currentGameType:String
     private var gameTypeChanged:Bool
-    //private var defaults:NSUserDefaults
+    private var defaults:NSUserDefaults
 	
 	// Initialze the Game class.
-    init() {
-        /*self.defaults = defaults
+    init(defaults:NSUserDefaults) {
+        self.defaults = defaults
         if defaults.stringForKey("currentGameType") != nil {
             
             guesses = defaults.arrayForKey("guesses") as! [Int]
@@ -35,26 +35,26 @@ class Game {
             } else {
                 gameplay = EvilGameplay()
             }
-        } else {*/
-        	gameplay = GoodGameplay()
+        } else {
+        	gameplay = EvilGameplay()
             guesses = [0,0]
         	money = 100
             highscores = ["GoodGameplay": [String:Int](), "EvilGameplay": [String:Int]()]
-        	currentGameType = "GoodGameplay"
+        	currentGameType = "EvilGameplay"
         	gameTypeChanged = false
             
-            //initializeDefaults()
-        //}
+            initializeDefaults()
+        }
 	}
     
-    /*private func initializeDefaults() {
+    private func initializeDefaults() {
         defaults.setObject(guesses, forKey: "guesses")
         defaults.setInteger(money, forKey: "money")
         defaults.setObject(highscores, forKey: "highscores")
         defaults.setObject(currentGameType, forKey: "currentGameType")
         defaults.setBool(gameTypeChanged, forKey: "gameTypeChanged")
         defaults.setObject([String](), forKey: "actions")
-    }*/
+    }
     
 	// Start a new game.
 	func startNewGame() {
@@ -68,27 +68,27 @@ class Game {
                 currentGameType = "GoodGameplay"
             }
             gameTypeChanged = false
-            //defaults.setBool(gameTypeChanged, forKey: "gameTypeChanged")
-            //defaults.setObject(currentGameType, forKey: "currentGameType")
+            defaults.setBool(gameTypeChanged, forKey: "gameTypeChanged")
+            defaults.setObject(currentGameType, forKey: "currentGameType")
         } else {
 			gameplay.newGame()
         }
-//        defaults.setObject(guesses, forKey: "guesses")
-//        defaults.setObject([String](), forKey: "actions")
+        defaults.setObject(guesses, forKey: "guesses")
+        defaults.setObject([String](), forKey: "actions")
 	}
 	
 	// Handle the given input of the user. Returns true if the input is correct else false
 	func handleInput(input:String) -> Bool {
-//        var actions = defaults.arrayForKey("actions") as! [String]
-//        actions.append(input)
-//        defaults.setObject(actions, forKey: "actions")
+        var actions = defaults.arrayForKey("actions") as! [String]
+        actions.append(input)
+        defaults.setObject(actions, forKey: "actions")
 		if gameplay.handleInput(Character(input.lowercaseString)) {
 			guesses[0] = guesses[0] + 1
-            //defaults.setObject(guesses, forKey: "guesses")
+            defaults.setObject(guesses, forKey: "guesses")
             return true
 		}
         guesses[1] = guesses[1] + 1
-        //defaults.setObject(guesses, forKey: "guesses")
+        defaults.setObject(guesses, forKey: "guesses")
         return false
 	}
     
@@ -110,18 +110,18 @@ class Game {
         } else {
             gameTypeChanged = true
         }
-        //defaults.setBool(gameTypeChanged, forKey: "gameTypeChanged")
+        defaults.setBool(gameTypeChanged, forKey: "gameTypeChanged")
     }
     
     func addMoney(madeMoney:Int) {
         money = money + madeMoney
-        //defaults.setInteger(money, forKey: "money")
+        defaults.setInteger(money, forKey: "money")
     }
     
     func spendMoney(spentMoney:Int) -> Bool {
         if money - spentMoney >= 0 {
         	money = money - spentMoney
-        	//defaults.setInteger(money, forKey: "money")
+        	defaults.setInteger(money, forKey: "money")
             return true
         }
         return false
@@ -129,10 +129,10 @@ class Game {
     
     func eraseError() {
         guesses[1] = guesses[1] - 1
-//        var actions = defaults.arrayForKey("actions") as! [String]
-//        actions.append("erase")
-//        defaults.setObject(actions, forKey: "actions")
-//        defaults.setObject(guesses, forKey: "guesses")
+        var actions = defaults.arrayForKey("actions") as! [String]
+        actions.append("erase")
+        defaults.setObject(actions, forKey: "actions")
+        defaults.setObject(guesses, forKey: "guesses")
     }
 	
     // Return the number of wrong guesses the user made.
