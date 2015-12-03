@@ -17,6 +17,8 @@
 		526E057A1BFE5BD000E8B797 /* GoodGameplay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526E05781BFE5BD000E8B797 /* GoodGameplay.swift */; };
 		526E057C1BFE5BED00E8B797 /* Gameplay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526E057B1BFE5BED00E8B797 /* Gameplay.swift */; };
 		52820ADD1C10C9C70053C98B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 52820ADB1C10C9C70053C98B /* Main.storyboard */; };
+		52820AE21C10F9330053C98B /* small.plist in Resources */ = {isa = PBXBuildFile; fileRef = 52820AE01C10F9330053C98B /* small.plist */; };
+		52820AE31C10F9330053C98B /* words.plist in Resources */ = {isa = PBXBuildFile; fileRef = 52820AE11C10F9330053C98B /* words.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +34,8 @@
 		526E05781BFE5BD000E8B797 /* GoodGameplay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoodGameplay.swift; sourceTree = "<group>"; };
 		526E057B1BFE5BED00E8B797 /* Gameplay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Gameplay.swift; sourceTree = "<group>"; };
 		52820ADC1C10C9C70053C98B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		52820AE01C10F9330053C98B /* small.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = small.plist; sourceTree = "<group>"; };
+		52820AE11C10F9330053C98B /* words.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = words.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,6 +78,8 @@
 				52820ADB1C10C9C70053C98B /* Main.storyboard */,
 				5246A9091BFE2C920061E9BE /* Assets.xcassets */,
 				5246A90B1BFE2C920061E9BE /* LaunchScreen.storyboard */,
+				52820AE01C10F9330053C98B /* small.plist */,
+				52820AE11C10F9330053C98B /* words.plist */,
 				5246A90E1BFE2C920061E9BE /* Info.plist */,
 			);
 			path = "Evil-Hangman";
@@ -139,7 +145,9 @@
 			files = (
 				5246A90D1BFE2C920061E9BE /* LaunchScreen.storyboard in Resources */,
 				5246A90A1BFE2C920061E9BE /* Assets.xcassets in Resources */,
+				52820AE21C10F9330053C98B /* small.plist in Resources */,
 				52820ADD1C10C9C70053C98B /* Main.storyboard in Resources */,
+				52820AE31C10F9330053C98B /* words.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

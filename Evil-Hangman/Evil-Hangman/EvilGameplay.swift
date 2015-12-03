@@ -65,8 +65,7 @@ class EvilGameplay : Gameplay {
     // Select a random word from the corpus.s
     func pickPossibleWords() -> Int {
         possibleWords = []
-        //let wordLength = Int(arc4random_uniform(UInt32(maxWordLength)))
-        let wordLength = 3
+        let wordLength = Int(arc4random_uniform(UInt32(maxWordLength)))
         for word in corpus {
             if word.characters.count == wordLength {
                 possibleWords.append(word)

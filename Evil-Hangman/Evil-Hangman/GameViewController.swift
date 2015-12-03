@@ -61,7 +61,9 @@ class GameViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        initializeGame()
+        if game == nil {
+        	initializeGame()
+        }
         drawDrawing()
         displayLabel.text = game.getDisplay()
         if defaults.stringForKey("currentGameType")! == "GoodGameplay" {

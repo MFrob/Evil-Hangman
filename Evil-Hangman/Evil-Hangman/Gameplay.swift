@@ -25,9 +25,11 @@ class Gameplay {
     
     init(possibleWords:[String], maxWordLength:Int) {
         self.maxWordLength = maxWordLength
-        corpus = ["dit","is","een","test","corpus"]
+        //corpus = ["dit","is","een","test","corpus"]
+        self.corpus = [String]()
         self.possibleWords = possibleWords
         display = [Character](count: possibleWords[0].characters.count, repeatedValue: "_")
+        loadCorpus("small")
     }
 	
 	// Start a new game.
@@ -55,5 +57,11 @@ class Gameplay {
     
     func changeMaxWordLength(length:Int) {
         maxWordLength = length
+    }
+    
+    private func loadCorpus(filename:String) -> [String] {
+        let path = NSBundle.mainBundle().pathForResource(filename, ofType: "plist")
+        return NSArray(contentsOfFile: path!) as! [String]
+        
     }
 }
