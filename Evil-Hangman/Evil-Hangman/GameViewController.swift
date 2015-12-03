@@ -61,10 +61,11 @@ class GameViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        if game == nil {
+        game = Game()
+        /*if game == nil {
 	        initializeGame()
-        }
-        showDrawing()
+        }*/
+        //showDrawing()
         displayLabel.text = game.getDisplay()
         // Do any additional setup after loading the view, typically from a nib.
     }
@@ -96,7 +97,7 @@ class GameViewController: UIViewController {
         }
 	}
     
-    private func initializeGame() {
+    /*private func initializeGame() {
         game = Game(defaults:defaults)
         let buttons = [a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z]
         for action in defaults.arrayForKey("actions") as! [String] {
@@ -120,7 +121,7 @@ class GameViewController: UIViewController {
                 }
             }
         }
-    }
+    }*/
     
     private func showDrawing() {
         let errors = game.getWrongGuesses()

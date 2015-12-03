@@ -39,7 +39,7 @@ class GoodGameplay : Gameplay {
 	// Select a random word from the corpus.s
 	func pickWord() {
 		let randomIndex = Int(arc4random_uniform(UInt32(corpus.count)))
-		possibleWords = [corpus[randomIndex].uppercaseString]
+		possibleWords = [corpus[randomIndex].lowercaseString]
         print("Picked word:"+possibleWords[0])
 	}
 }
