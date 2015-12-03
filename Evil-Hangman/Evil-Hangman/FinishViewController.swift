@@ -36,11 +36,46 @@ class FinishViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        let score = game.computeScore()
+        
+        scoreLabel.text = "Score: "+String(score[0])
+        madeMoneyLabel.text = "+$"+String(score[1])
+        
         if game.wonGame() {
             feedbackLabel.text = "Congratulations!"
         } else {
             feedbackLabel.text = "Try again"
         }
+        if defaults.stringForKey("currentGameType")! == "GoodGameplay" {
+            titleLabel.text = "Good"
+        } else {
+            titleLabel.text = "Evil"
+        }
+        moneyLabel.text = "$"+String(defaults.integerForKey("money"))
+        
+        showDrawing()
+        
+        displayLabel.text = game.getCorrectWord()
+        game.startNewGame()
+        // Do any additional setup after loading the view, typically from a nib.
+    }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+    @IBAction func playAgainAction(sender: AnyObject) {
+        self.performSegueWithIdentifier("playAgain", sender: sender)
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "playAgain" {
+            let destination = segue.destinationViewController as! GameViewController
+            destination.game = game
+        }
+    }
+    
+    private func showDrawing() {
         let errors = game.getWrongGuesses()
         if errors == 1 {
             errorImage1.hidden = false
@@ -64,24 +99,6 @@ class FinishViewController: UIViewController {
             errorImage10.hidden = false
         } else if errors == 11 {
             errorImage11.hidden = false
-        }
-        displayLabel.text = game.getCorrectWord()
-        game.startNewGame()
-        // Do any additional setup after loading the view, typically from a nib.
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    @IBAction func playAgainAction(sender: AnyObject) {
-        self.performSegueWithIdentifier("playAgain", sender: sender)
-    }
-    
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "playAgain" {
-            let destination = segue.destinationViewController as! GameViewController
-            destination.game = game
         }
     }
 }

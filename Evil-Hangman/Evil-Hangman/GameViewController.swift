@@ -11,6 +11,7 @@ import UIKit
 class GameViewController: UIViewController {
     
     var game:Game!
+    let defaults = NSUserDefaults.standardUserDefaults()
     
     // Label outlets.
     @IBOutlet weak var displayLabel: UILabel!
@@ -61,8 +62,14 @@ class GameViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         initializeGame()
-        showDrawing()
+        drawDrawing()
         displayLabel.text = game.getDisplay()
+        if defaults.stringForKey("currentGameType")! == "GoodGameplay" {
+            titleLabel.text = "Good"
+        } else {
+            titleLabel.text = "Evil"
+        }
+        moneyLabel.text = "$"+String(defaults.integerForKey("money"))
         // Do any additional setup after loading the view, typically from a nib.
     }
 
@@ -77,7 +84,7 @@ class GameViewController: UIViewController {
             button.backgroundColor = UIColor.greenColor()
         } else {
             button.backgroundColor = UIColor.redColor()
-            showDrawing()
+            drawDrawing()
         }
         displayLabel.text = game.getDisplay()
         button.enabled = false
@@ -86,6 +93,12 @@ class GameViewController: UIViewController {
         }
     }
 
+    @IBAction func eraseAction(sender: AnyObject) {
+        game.eraseError()
+        drawDrawing()
+        moneyLabel.text = "$"+String(defaults.integerForKey("money"))
+    }
+    
 	override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "finishedGame" {
             let destination = segue.destinationViewController as! FinishViewController
@@ -94,7 +107,6 @@ class GameViewController: UIViewController {
 	}
     
 	private func initializeGame() {
-        let defaults = NSUserDefaults.standardUserDefaults()
         game = Game(defaults:defaults)
         //let buttons = [a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z]
         let buttons = getButtons()
@@ -121,37 +133,49 @@ class GameViewController: UIViewController {
         }
     }
     
-    private func showDrawing() {
+    private func drawDrawing() {
         let errors = game.getWrongGuesses()
-        if errors == 1 {
+        if errors == 0 {
+            errorImage1.hidden = true
+    	} else if errors == 1 {
             errorImage1.hidden = false
+            errorImage2.hidden = true
         } else if errors == 2 {
             errorImage1.hidden = true
             errorImage2.hidden = false
+            errorImage3.hidden = true
         } else if errors == 3 {
             errorImage2.hidden = true
             errorImage3.hidden = false
+            errorImage4.hidden = true
         } else if errors == 4 {
             errorImage3.hidden = true
             errorImage4.hidden = false
+            errorImage5.hidden = true
         } else if errors == 5 {
             errorImage4.hidden = true
             errorImage5.hidden = false
+            errorImage6.hidden = true
         } else if errors == 6 {
             errorImage5.hidden = true
             errorImage6.hidden = false
+            errorImage7.hidden = true
         } else if errors == 7 {
             errorImage6.hidden = true
             errorImage7.hidden = false
+            errorImage8.hidden = true
         } else if errors == 8 {
             errorImage7.hidden = true
             errorImage8.hidden = false
+            errorImage9.hidden = true
         } else if errors == 9 {
             errorImage8.hidden = true
             errorImage9.hidden = false
+            errorImage10.hidden = true
         } else if errors == 10 {
             errorImage9.hidden = true
             errorImage10.hidden = false
+            errorImage11.hidden = true
         } else if errors == 11 {
             errorImage10.hidden = true
             errorImage11.hidden = false

@@ -118,6 +118,11 @@ class Game {
 		return false
 	}
     
+    func computeScore() -> [Int] {
+        addMoney(100)
+        return [100,100]
+    }
+    
     func changeGameplay() {
         if gameTypeChanged {
             gameTypeChanged = false
@@ -127,12 +132,12 @@ class Game {
         defaults.setBool(gameTypeChanged, forKey: "gameTypeChanged")
     }
     
-    func addMoney(madeMoney:Int) {
+    private func addMoney(madeMoney:Int) {
         money = money + madeMoney
         defaults.setInteger(money, forKey: "money")
     }
     
-    func spendMoney(spentMoney:Int) -> Bool {
+    private func spendMoney(spentMoney:Int) -> Bool {
         if money - spentMoney >= 0 {
         	money = money - spentMoney
         	defaults.setInteger(money, forKey: "money")
@@ -141,12 +146,16 @@ class Game {
         return false
     }
     
-    func eraseError() {
-        guesses[1] = guesses[1] - 1
-        var actions = defaults.arrayForKey("actions") as! [String]
-        actions.append("erase")
-        defaults.setObject(actions, forKey: "actions")
-        defaults.setObject(guesses, forKey: "guesses")
+    func eraseError() -> Bool {
+        if spendMoney(100) {
+        	guesses[1] = guesses[1] - 1
+            var actions = defaults.arrayForKey("actions") as! [String]
+        	actions.append("erase")
+        	defaults.setObject(actions, forKey: "actions")
+        	defaults.setObject(guesses, forKey: "guesses")
+            return true
+        }
+        return false
     }
 	
     // Return the number of wrong guesses the user made.
