@@ -66,7 +66,7 @@
                                     <constraint firstAttribute="trailing" secondItem="YRq-H2-IIS" secondAttribute="trailing" id="vtG-vg-lAk"/>
                                 </constraints>
                             </view>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="LxH-yP-ZCm" userLabel="Everything">
+                            <stackView opaque="NO" tag="1" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="LxH-yP-ZCm" userLabel="Everything">
                                 <rect key="frame" x="0.0" y="70" width="600" height="515"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="e9a-H6-ToS">
@@ -197,13 +197,13 @@
                                             <fontDescription key="fontDescription" type="system" pointSize="26"/>
                                         </variation>
                                     </label>
-                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="center" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="le8-hN-GdX" userLabel="Keyboard">
+                                    <stackView opaque="NO" tag="2" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="center" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="le8-hN-GdX" userLabel="Keyboard">
                                         <rect key="frame" x="20" y="423" width="560" height="92"/>
                                         <subviews>
-                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="7RT-90-GoE" userLabel="buttonGroup1">
+                                            <stackView opaque="NO" tag="3" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="7RT-90-GoE" userLabel="buttonGroup1">
                                                 <rect key="frame" x="0.0" y="0.0" width="560" height="43"/>
                                                 <subviews>
-                                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="OWy-AD-uZp" userLabel="buttons1">
+                                                    <stackView opaque="NO" tag="4" contentMode="scaleToFill" distribution="fillEqually" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="OWy-AD-uZp" userLabel="buttons1">
                                                         <rect key="frame" x="0.0" y="0.0" width="560" height="19"/>
                                                         <subviews>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ECM-0U-WVT">
@@ -286,7 +286,7 @@
                                                         </subviews>
                                                         <animations/>
                                                     </stackView>
-                                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="K5q-le-udR" userLabel="buttons2">
+                                                    <stackView opaque="NO" tag="5" contentMode="scaleToFill" distribution="fillEqually" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="K5q-le-udR" userLabel="buttons2">
                                                         <rect key="frame" x="0.0" y="24" width="560" height="19"/>
                                                         <subviews>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="o9Q-ds-xXK">
@@ -362,10 +362,10 @@
                                                 <animations/>
                                                 <variation key="heightClass=compact" axis="horizontal" distribution="fillProportionally"/>
                                             </stackView>
-                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="BAN-qt-Csa" userLabel="buttonGroup2">
+                                            <stackView opaque="NO" tag="6" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="BAN-qt-Csa" userLabel="buttonGroup2">
                                                 <rect key="frame" x="0.0" y="48" width="560" height="44"/>
                                                 <subviews>
-                                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="N3j-te-8Iy" userLabel="buttons3">
+                                                    <stackView opaque="NO" tag="7" contentMode="scaleToFill" distribution="fillEqually" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="N3j-te-8Iy" userLabel="buttons3">
                                                         <rect key="frame" x="0.0" y="0.0" width="560" height="20"/>
                                                         <subviews>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CKW-j1-dVV">
@@ -448,7 +448,7 @@
                                                         </subviews>
                                                         <animations/>
                                                     </stackView>
-                                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="ev1-fm-S1A" userLabel="buttons4">
+                                                    <stackView opaque="NO" tag="8" contentMode="scaleToFill" distribution="fillEqually" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="ev1-fm-S1A" userLabel="buttons4">
                                                         <rect key="frame" x="0.0" y="25" width="560" height="19"/>
                                                         <subviews>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ifr-wd-1gl">
@@ -558,12 +558,7 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="a" destination="ECM-0U-WVT" id="iSE-za-rO8"/>
-                        <outlet property="b" destination="yak-Vc-lNk" id="S8c-rw-gZW"/>
-                        <outlet property="c" destination="vUQ-ad-NTR" id="mO3-G1-qrc"/>
-                        <outlet property="d" destination="0kR-vg-QT9" id="GT2-f1-WG0"/>
                         <outlet property="displayLabel" destination="0M6-C1-UiK" id="HRA-ry-umf"/>
-                        <outlet property="e" destination="GTW-qo-5ol" id="g1T-km-1H7"/>
                         <outlet property="errorImage1" destination="ht3-xN-ANz" id="085-AG-gZR"/>
                         <outlet property="errorImage10" destination="ACB-GQ-Wth" id="hnw-gf-vJR"/>
                         <outlet property="errorImage11" destination="LJZ-Al-wOv" id="gFG-dD-U2C"/>
@@ -575,29 +570,8 @@
                         <outlet property="errorImage7" destination="gcf-oh-PYi" id="HLm-dK-S50"/>
                         <outlet property="errorImage8" destination="bjX-zU-vAF" id="f0M-B4-ydw"/>
                         <outlet property="errorImage9" destination="tEW-Fl-Tis" id="Ebx-oS-xEZ"/>
-                        <outlet property="f" destination="AjI-eC-bwc" id="B4q-mT-MxJ"/>
-                        <outlet property="g" destination="6GM-TT-o9a" id="YeJ-zD-iQL"/>
-                        <outlet property="h" destination="o9Q-ds-xXK" id="WHb-bR-nuZ"/>
-                        <outlet property="i" destination="35T-95-gtb" id="dEC-Ti-pye"/>
-                        <outlet property="j" destination="q8d-P1-gbZ" id="l3g-C5-YnV"/>
-                        <outlet property="k" destination="RI6-3j-Qaf" id="1kq-6E-wIh"/>
-                        <outlet property="l" destination="fvf-nT-gML" id="dcr-T2-gEn"/>
-                        <outlet property="m" destination="RG7-yx-5Dz" id="pKq-Wb-3oB"/>
                         <outlet property="moneyLabel" destination="YRq-H2-IIS" id="BnN-l5-EZI"/>
-                        <outlet property="n" destination="CKW-j1-dVV" id="QtL-4q-FCi"/>
-                        <outlet property="o" destination="kn4-9b-iGM" id="ayh-Ts-lsJ"/>
-                        <outlet property="p" destination="t86-Fw-RQ7" id="zmg-LE-q2l"/>
-                        <outlet property="q" destination="4PW-Uc-9hC" id="HSP-Rq-pN5"/>
-                        <outlet property="r" destination="fcR-A5-3Jt" id="vCW-Bg-foN"/>
-                        <outlet property="s" destination="Zlg-7K-aeK" id="6Xk-yX-A5I"/>
-                        <outlet property="t" destination="OWv-4y-Ubu" id="oII-5b-vIX"/>
                         <outlet property="titleLabel" destination="sbQ-6C-tjm" id="f33-Se-Zf9"/>
-                        <outlet property="u" destination="Ifr-wd-1gl" id="T8X-pk-tmt"/>
-                        <outlet property="v" destination="Cvx-n7-88m" id="JhS-sf-kV6"/>
-                        <outlet property="w" destination="8Ti-Mu-q9F" id="2dK-db-G4e"/>
-                        <outlet property="x" destination="avb-10-D26" id="xmz-Js-B1F"/>
-                        <outlet property="y" destination="ulF-qQ-R5L" id="X7f-lh-RjV"/>
-                        <outlet property="z" destination="wZd-he-7Ee" id="QjU-xh-jDr"/>
                         <segue destination="RSa-ml-2VC" kind="showDetail" identifier="finishedGame" id="qQ6-Cf-k6F"/>
                     </connections>
                 </viewController>

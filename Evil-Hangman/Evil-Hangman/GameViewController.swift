@@ -11,7 +11,6 @@ import UIKit
 class GameViewController: UIViewController {
     
     var game:Game!
-    let defaults = NSUserDefaults.standardUserDefaults()
     
     // Label outlets.
     @IBOutlet weak var displayLabel: UILabel!
@@ -32,39 +31,36 @@ class GameViewController: UIViewController {
     @IBOutlet weak var errorImage11: UIImageView!
     
     // Button outlets.
-    @IBOutlet weak var a: UIButton!
-    @IBOutlet weak var b: UIButton!
-    @IBOutlet weak var c: UIButton!
-    @IBOutlet weak var d: UIButton!
-    @IBOutlet weak var e: UIButton!
-    @IBOutlet weak var f: UIButton!
-    @IBOutlet weak var g: UIButton!
-    @IBOutlet weak var h: UIButton!
-    @IBOutlet weak var i: UIButton!
-    @IBOutlet weak var j: UIButton!
-    @IBOutlet weak var k: UIButton!
-    @IBOutlet weak var l: UIButton!
-    @IBOutlet weak var m: UIButton!
-    @IBOutlet weak var n: UIButton!
-    @IBOutlet weak var o: UIButton!
-    @IBOutlet weak var p: UIButton!
-    @IBOutlet weak var q: UIButton!
-    @IBOutlet weak var r: UIButton!
-    @IBOutlet weak var s: UIButton!
-    @IBOutlet weak var t: UIButton!
-    @IBOutlet weak var u: UIButton!
-    @IBOutlet weak var v: UIButton!
-    @IBOutlet weak var w: UIButton!
-    @IBOutlet weak var x: UIButton!
-    @IBOutlet weak var y: UIButton!
-    @IBOutlet weak var z: UIButton!
+//    @IBOutlet weak var a: UIButton!
+//    @IBOutlet weak var b: UIButton!
+//    @IBOutlet weak var c: UIButton!
+//    @IBOutlet weak var d: UIButton!
+//    @IBOutlet weak var e: UIButton!
+//    @IBOutlet weak var f: UIButton!
+//    @IBOutlet weak var g: UIButton!
+//    @IBOutlet weak var h: UIButton!
+//    @IBOutlet weak var i: UIButton!
+//    @IBOutlet weak var j: UIButton!
+//    @IBOutlet weak var k: UIButton!
+//    @IBOutlet weak var l: UIButton!
+//    @IBOutlet weak var m: UIButton!
+//    @IBOutlet weak var n: UIButton!
+//    @IBOutlet weak var o: UIButton!
+//    @IBOutlet weak var p: UIButton!
+//    @IBOutlet weak var q: UIButton!
+//    @IBOutlet weak var r: UIButton!
+//    @IBOutlet weak var s: UIButton!
+//    @IBOutlet weak var t: UIButton!
+//    @IBOutlet weak var u: UIButton!
+//    @IBOutlet weak var v: UIButton!
+//    @IBOutlet weak var w: UIButton!
+//    @IBOutlet weak var x: UIButton!
+//    @IBOutlet weak var y: UIButton!
+//    @IBOutlet weak var z: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //game = Game()
-        if game == nil {
-	        initializeGame()
-        }
+        initializeGame()
         showDrawing()
         displayLabel.text = game.getDisplay()
         // Do any additional setup after loading the view, typically from a nib.
@@ -98,8 +94,10 @@ class GameViewController: UIViewController {
 	}
     
 	private func initializeGame() {
+        let defaults = NSUserDefaults.standardUserDefaults()
         game = Game(defaults:defaults)
-        let buttons = [a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z]
+        //let buttons = [a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z]
+        let buttons = getButtons()
         for action in defaults.arrayForKey("actions") as! [String] {
             if action == "erase" {
                 game.eraseError()
@@ -158,5 +156,37 @@ class GameViewController: UIViewController {
             errorImage10.hidden = true
             errorImage11.hidden = false
         }
+    }
+    
+    private func getButtons() -> [UIButton] {
+        var buttons:[UIButton] = []
+        for everything in self.view.subviews {
+            if everything.tag == 1 {
+                for keyboard in everything.subviews {
+                    if keyboard.tag == 2 {
+                        for buttonGroup in keyboard.subviews {
+                            if buttonGroup.tag == 3 {
+                                for but in buttonGroup.subviews {
+                                    if but.tag == 4 {
+                                        buttons = but.subviews as! [UIButton]
+                                    } else if but.tag == 5 {
+                                        buttons += but.subviews as! [UIButton]
+                                    }
+                                }
+                            } else if buttonGroup.tag == 6 {
+                                for but in buttonGroup.subviews {
+                                    if but.tag == 7 {
+                                        buttons += but.subviews as! [UIButton]
+                                    } else if but.tag == 8 {
+                                        buttons += but.subviews as! [UIButton]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return buttons
     }
 }

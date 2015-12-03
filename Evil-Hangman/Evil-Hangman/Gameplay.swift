@@ -1,6 +1,6 @@
 //
 //  Gameplay.swift
-//  Mad Libs
+//  Evil-Hangman
 //
 //  Created by Mees Fröberg on 11/11/15.
 //  Copyright © 2015 Mees. All rights reserved.
@@ -23,11 +23,11 @@ class Gameplay {
         newGame()
 	}
     
-    init(display:[Character], maxWordLength:Int) {
-        self.display = display
+    init(possibleWords:[String], maxWordLength:Int) {
         self.maxWordLength = maxWordLength
         corpus = ["dit","is","een","test","corpus"]
-        possibleWords = [String]()
+        self.possibleWords = possibleWords
+        display = [Character](count: possibleWords[0].characters.count, repeatedValue: "_")
     }
 	
 	// Start a new game.

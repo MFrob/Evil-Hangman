@@ -1,6 +1,6 @@
 //
 //  Game.swift
-//  Mad Libs
+//  Evil-Hangman
 //
 //  Created by Mees Fröberg on 11/11/15.
 //  Copyright © 2015 Mees. All rights reserved.
@@ -29,18 +29,20 @@ class Game {
             highscores = defaults.dictionaryForKey("highscores") as! [String:[String:Int]]
             currentGameType = defaults.stringForKey("currentGameType")!
             gameTypeChanged = defaults.boolForKey("gameTypeChanged")
+            let possibleWords = defaults.arrayForKey("possibleWords") as! [String]
+            let maxWordLength = defaults.integerForKey("maxWordLength")
             
             if currentGameType == "GoodGameplay" {
-                gameplay = GoodGameplay()
+                gameplay = GoodGameplay(possibleWords: possibleWords, maxWordLength: maxWordLength)
             } else {
-                gameplay = EvilGameplay()
+                gameplay = EvilGameplay(possibleWords: possibleWords, maxWordLength: maxWordLength)
             }
         } else {
-        	gameplay = EvilGameplay()
+        	gameplay = GoodGameplay()
             guesses = [0,0]
         	money = 100
             highscores = ["GoodGameplay": [String:Int](), "EvilGameplay": [String:Int]()]
-        	currentGameType = "EvilGameplay"
+        	currentGameType = "GoodGameplay"
         	gameTypeChanged = false
             
             initializeDefaults()
@@ -53,7 +55,18 @@ class Game {
         defaults.setObject(highscores, forKey: "highscores")
         defaults.setObject(currentGameType, forKey: "currentGameType")
         defaults.setBool(gameTypeChanged, forKey: "gameTypeChanged")
+        defaults.setObject(gameplay.possibleWords, forKey: "possibleWords")
+        defaults.setInteger(gameplay.maxWordLength, forKey: "maxWordLength")
         defaults.setObject([String](), forKey: "actions")
+    }
+    
+    private func printContentDefaults() {
+        print("guesses: "+String(defaults.arrayForKey("guesses") as! [Int]))
+        print("money: "+String(defaults.integerForKey("money")))
+        print("highscores: "+String(defaults.dictionaryForKey("highscores") as! [String:[String:Int]]))
+        print("currentGameType: "+defaults.stringForKey("currentGameType")!)
+        print("gameTypeChanged: "+String(defaults.boolForKey("gameTypeChanged")))
+        print("actions: "+String(defaults.arrayForKey("actions") as! [String]))
     }
     
 	// Start a new game.
@@ -73,6 +86,7 @@ class Game {
         } else {
 			gameplay.newGame()
         }
+        defaults.setObject(gameplay.possibleWords, forKey: "possibleWords")
         defaults.setObject(guesses, forKey: "guesses")
         defaults.setObject([String](), forKey: "actions")
 	}
