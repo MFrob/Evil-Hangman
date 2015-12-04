@@ -19,6 +19,18 @@ class Game {
     private var gameTypeChanged:Bool
     private var defaults:NSUserDefaults
 	
+    init() {
+        defaults = NSUserDefaults.standardUserDefaults()
+        gameplay = GoodGameplay()
+        guesses = [0,0]
+        money = 100
+        highscores = ["GoodGameplay": [String:Int](), "EvilGameplay": [String:Int]()]
+        currentGameType = "GoodGameplay"
+        gameTypeChanged = false
+        
+        initializeDefaults()
+    }
+    
 	// Initialze the Game class.
     init(defaults:NSUserDefaults) {
         self.defaults = defaults
@@ -38,36 +50,16 @@ class Game {
                 gameplay = EvilGameplay(possibleWords: possibleWords, maxWordLength: maxWordLength)
             }
         } else {
-        	gameplay = GoodGameplay()
+            gameplay = GoodGameplay()
             guesses = [0,0]
-        	money = 100
+            money = 100
             highscores = ["GoodGameplay": [String:Int](), "EvilGameplay": [String:Int]()]
-        	currentGameType = "GoodGameplay"
-        	gameTypeChanged = false
+            currentGameType = "GoodGameplay"
+            gameTypeChanged = false
             
             initializeDefaults()
         }
 	}
-    
-    private func initializeDefaults() {
-        defaults.setObject(guesses, forKey: "guesses")
-        defaults.setInteger(money, forKey: "money")
-        defaults.setObject(highscores, forKey: "highscores")
-        defaults.setObject(currentGameType, forKey: "currentGameType")
-        defaults.setBool(gameTypeChanged, forKey: "gameTypeChanged")
-        defaults.setObject(gameplay.possibleWords, forKey: "possibleWords")
-        defaults.setInteger(gameplay.maxWordLength, forKey: "maxWordLength")
-        defaults.setObject([String](), forKey: "actions")
-    }
-    
-    private func printContentDefaults() {
-        print("guesses: "+String(defaults.arrayForKey("guesses") as! [Int]))
-        print("money: "+String(defaults.integerForKey("money")))
-        print("highscores: "+String(defaults.dictionaryForKey("highscores") as! [String:[String:Int]]))
-        print("currentGameType: "+defaults.stringForKey("currentGameType")!)
-        print("gameTypeChanged: "+String(defaults.boolForKey("gameTypeChanged")))
-        print("actions: "+String(defaults.arrayForKey("actions") as! [String]))
-    }
     
 	// Start a new game.
 	func startNewGame() {
@@ -195,5 +187,25 @@ class Game {
             index = index + 1
         }
         return display.uppercaseString
+    }
+    
+    private func initializeDefaults() {
+        defaults.setObject(guesses, forKey: "guesses")
+        defaults.setInteger(money, forKey: "money")
+        defaults.setObject(highscores, forKey: "highscores")
+        defaults.setObject(currentGameType, forKey: "currentGameType")
+        defaults.setBool(gameTypeChanged, forKey: "gameTypeChanged")
+        defaults.setObject(gameplay.possibleWords, forKey: "possibleWords")
+        defaults.setInteger(gameplay.maxWordLength, forKey: "maxWordLength")
+        defaults.setObject([String](), forKey: "actions")
+    }
+    
+    private func printContentDefaults() {
+        print("guesses: "+String(defaults.arrayForKey("guesses") as! [Int]))
+        print("money: "+String(defaults.integerForKey("money")))
+        print("highscores: "+String(defaults.dictionaryForKey("highscores") as! [String:[String:Int]]))
+        print("currentGameType: "+defaults.stringForKey("currentGameType")!)
+        print("gameTypeChanged: "+String(defaults.boolForKey("gameTypeChanged")))
+        print("actions: "+String(defaults.arrayForKey("actions") as! [String]))
     }
 }

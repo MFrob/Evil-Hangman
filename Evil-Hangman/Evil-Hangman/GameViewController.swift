@@ -31,34 +31,6 @@ class GameViewController: UIViewController {
     @IBOutlet weak var errorImage10: UIImageView!
     @IBOutlet weak var errorImage11: UIImageView!
     
-    // Button outlets.
-//    @IBOutlet weak var a: UIButton!
-//    @IBOutlet weak var b: UIButton!
-//    @IBOutlet weak var c: UIButton!
-//    @IBOutlet weak var d: UIButton!
-//    @IBOutlet weak var e: UIButton!
-//    @IBOutlet weak var f: UIButton!
-//    @IBOutlet weak var g: UIButton!
-//    @IBOutlet weak var h: UIButton!
-//    @IBOutlet weak var i: UIButton!
-//    @IBOutlet weak var j: UIButton!
-//    @IBOutlet weak var k: UIButton!
-//    @IBOutlet weak var l: UIButton!
-//    @IBOutlet weak var m: UIButton!
-//    @IBOutlet weak var n: UIButton!
-//    @IBOutlet weak var o: UIButton!
-//    @IBOutlet weak var p: UIButton!
-//    @IBOutlet weak var q: UIButton!
-//    @IBOutlet weak var r: UIButton!
-//    @IBOutlet weak var s: UIButton!
-//    @IBOutlet weak var t: UIButton!
-//    @IBOutlet weak var u: UIButton!
-//    @IBOutlet weak var v: UIButton!
-//    @IBOutlet weak var w: UIButton!
-//    @IBOutlet weak var x: UIButton!
-//    @IBOutlet weak var y: UIButton!
-//    @IBOutlet weak var z: UIButton!
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         if game == nil {
@@ -72,7 +44,6 @@ class GameViewController: UIViewController {
             titleLabel.text = "Evil"
         }
         moneyLabel.text = "$"+String(defaults.integerForKey("money"))
-        // Do any additional setup after loading the view, typically from a nib.
     }
 
     override func didReceiveMemoryWarning() {
@@ -110,7 +81,6 @@ class GameViewController: UIViewController {
     
 	private func initializeGame() {
         game = Game(defaults:defaults)
-        //let buttons = [a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z]
         let buttons = getButtons()
         for action in defaults.arrayForKey("actions") as! [String] {
             if action == "erase" {

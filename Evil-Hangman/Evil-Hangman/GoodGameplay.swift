@@ -12,7 +12,11 @@ class GoodGameplay : Gameplay {
 	
 	// Initialize the GoodGameplay class.
 	override init() {
+        print("in init")
         super.init()
+        print("done super init")
+        pickWord()
+        display = [Character](count: possibleWords[0].characters.count, repeatedValue: "_")
 	}
     
     override init(possibleWords:[String], maxWordLength:Int) {
@@ -42,8 +46,14 @@ class GoodGameplay : Gameplay {
 	
 	// Select a random word from the corpus.s
 	func pickWord() {
-		let randomIndex = Int(arc4random_uniform(UInt32(corpus.count-1)))
-		possibleWords = [corpus[randomIndex].lowercaseString]
+        var newCorpus = [String]()
+        for word in corpus {
+            if word.characters.count <= maxWordLength {
+                newCorpus.append(word)
+            }
+        }
+        let randomIndex = arc4random() % UInt32(possibleWords.count-1)
+		possibleWords = [newCorpus[Int(randomIndex)].lowercaseString]
         print("Picked word:"+possibleWords[0])
 	}
 }
