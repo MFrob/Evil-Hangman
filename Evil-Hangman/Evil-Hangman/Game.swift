@@ -11,34 +11,37 @@
 import Foundation
 
 class Game {
-	private var gameplay:Gameplay
+    private var gameplay:Gameplay
     private var guesses:[Int]
     private var money:Int
-    private var highscores:[String:[String:Int]]
+    private var goodHighscores:[Int:[String]]
+    private var evilHighscores:[Int:[String]]
     private var currentGameType:String
     private var gameTypeChanged:Bool
     private var defaults:NSUserDefaults
-	
+    
     init() {
         defaults = NSUserDefaults.standardUserDefaults()
         gameplay = GoodGameplay()
         guesses = [0,0]
         money = 100
-        highscores = ["GoodGameplay": [String:Int](), "EvilGameplay": [String:Int]()]
+        goodHighscores = [Int:[String]]()
+        evilHighscores = [Int:[String]]()
         currentGameType = "GoodGameplay"
         gameTypeChanged = false
         
         initializeDefaults()
     }
     
-	// Initialze the Game class.
+    // Initialze the Game class.
     init(defaults:NSUserDefaults) {
         self.defaults = defaults
         if defaults.stringForKey("currentGameType") != nil {
             
             guesses = defaults.arrayForKey("guesses") as! [Int]
             money = defaults.integerForKey("money")
-            highscores = defaults.dictionaryForKey("highscores") as! [String:[String:Int]]
+            goodHighscores = defaults.objectForKey("goodHighscores") as! [Int:[String]]
+            evilHighscores = defaults.objectForKey("evilHighscores") as! [Int:[String]]
             currentGameType = defaults.stringForKey("currentGameType")!
             gameTypeChanged = defaults.boolForKey("gameTypeChanged")
             let possibleWords = defaults.arrayForKey("possibleWords") as! [String]
@@ -53,17 +56,18 @@ class Game {
             gameplay = GoodGameplay()
             guesses = [0,0]
             money = 100
-            highscores = ["GoodGameplay": [String:Int](), "EvilGameplay": [String:Int]()]
+            goodHighscores = [Int:[String]]()
+            evilHighscores = [Int:[String]]()
             currentGameType = "GoodGameplay"
             gameTypeChanged = false
             
             initializeDefaults()
         }
-	}
+    }
     
-	// Start a new game.
-	func startNewGame() {
-		guesses = [0,0]
+    // Start a new game.
+    func startNewGame() {
+        guesses = [0,0]
         if gameTypeChanged {
             if currentGameType == "GoodGameplay" {
                 gameplay = EvilGameplay()
@@ -76,43 +80,97 @@ class Game {
             defaults.setBool(gameTypeChanged, forKey: "gameTypeChanged")
             defaults.setObject(currentGameType, forKey: "currentGameType")
         } else {
-			gameplay.newGame()
+            gameplay.newGame()
         }
         defaults.setObject(gameplay.possibleWords, forKey: "possibleWords")
         defaults.setObject(guesses, forKey: "guesses")
         defaults.setObject([String](), forKey: "actions")
-	}
-	
-	// Handle the given input of the user. Returns true if the input is correct else false
-	func handleInput(input:String) -> Bool {
+    }
+    
+    // Handle the given input of the user. Returns true if the input is correct else false
+    func handleInput(input:String) -> Bool {
         var actions = defaults.arrayForKey("actions") as! [String]
         actions.append(input)
         defaults.setObject(actions, forKey: "actions")
-		if gameplay.handleInput(Character(input.lowercaseString)) {
-			guesses[0] = guesses[0] + 1
+        if gameplay.handleInput(Character(input.lowercaseString)) {
+            guesses[0] = guesses[0] + 1
             defaults.setObject(guesses, forKey: "guesses")
             return true
-		}
+        }
         guesses[1] = guesses[1] + 1
         defaults.setObject(guesses, forKey: "guesses")
         return false
-	}
+    }
     
     func wonGame() -> Bool {
         return !getDisplay().containsString("_")
     }
-	
-	// Check if the user lost the game.
-	func lostGame() -> Bool {
-		if guesses[1] == 11 {
-			return true
-		}
-		return false
-	}
+    
+    // Check if the user lost the game.
+    func lostGame() -> Bool {
+        if guesses[1] == 11 {
+            return true
+        }
+        return false
+    }
     
     func computeScore() -> [Int] {
         addMoney(100)
         return [100,100]
+    }
+    
+    func checkHighscore(score:Int) -> Bool {
+        var highscores:[Int:[String]]
+        if currentGameType == "goodGameplay" {
+            highscores = goodHighscores
+        } else {
+            highscores = evilHighscores
+        }
+        
+        // Return true if the score is a highscore
+        var number = 0
+        for highscore in highscores.keys {
+            if score >= highscore {
+                return true
+            }
+            number = number + highscores[highscore]!.count
+        }
+        
+        if number < 10 {
+            return true
+        }
+        
+        return false
+    }
+    
+    func addHighscore(score:Int, name:String) {
+        var highscores:[Int:[String]]
+        if currentGameType == "goodGameplay" {
+            highscores = goodHighscores
+        } else {
+            highscores = evilHighscores
+        }
+        
+        // Add highscore.
+        if highscores[score] == nil {
+            highscores.updateValue([name], forKey: score)
+        } else {
+            var value = highscores[score]!
+            value.insert(name, atIndex: 0)
+            highscores.updateValue(value, forKey: score)
+        }
+        
+        // Remove lowest/oldest highscore.
+        let scores = highscores.keys.sort(>)
+        var value = highscores[scores[scores.count-1]]!
+        if value.count == 1 {
+            highscores.removeValueForKey(scores[scores.count-1])
+        } else {
+        	value.removeAtIndex(value.count-1)
+            highscores.updateValue(value, forKey: scores[scores.count-1])
+        }
+        defaults.setObject(goodHighscores, forKey: "goodHighscores")
+        defaults.setObject(evilHighscores, forKey: "evilHighscores")
     }
     
     func changeGameplay() {
@@ -131,34 +189,34 @@ class Game {
     
     private func spendMoney(spentMoney:Int) -> Bool {
         if money - spentMoney >= 0 {
-        	money = money - spentMoney
-        	defaults.setInteger(money, forKey: "money")
+            money = money - spentMoney
+            defaults.setInteger(money, forKey: "money")
             return true
         }
         return false
     }
     
     func eraseError() -> Bool {
-        if spendMoney(100) {
-        	guesses[1] = guesses[1] - 1
+        if getWrongGuesses() > 0 && spendMoney(100) {
+            guesses[1] = guesses[1] - 1
             var actions = defaults.arrayForKey("actions") as! [String]
-        	actions.append("erase")
-        	defaults.setObject(actions, forKey: "actions")
-        	defaults.setObject(guesses, forKey: "guesses")
+            actions.append("erase")
+            defaults.setObject(actions, forKey: "actions")
+            defaults.setObject(guesses, forKey: "guesses")
             return true
         }
         return false
     }
-	
+    
     // Return the number of wrong guesses the user made.
     func getCorrectGuesses() -> Int {
         return guesses[0]
     }
     
-	// Return the number of wrong guesses the user made.
-	func getWrongGuesses() -> Int {
-		return guesses[1]
-	}
+    // Return the number of wrong guesses the user made.
+    func getWrongGuesses() -> Int {
+        return guesses[1]
+    }
     
     // Return the current display of the game.
     func getDisplay() -> String {
@@ -192,7 +250,8 @@ class Game {
     private func initializeDefaults() {
         defaults.setObject(guesses, forKey: "guesses")
         defaults.setInteger(money, forKey: "money")
-        defaults.setObject(highscores, forKey: "highscores")
+        defaults.setObject(goodHighscores, forKey: "goodHighscores")
+        defaults.setObject(evilHighscores, forKey: "evilHighscores")
         defaults.setObject(currentGameType, forKey: "currentGameType")
         defaults.setBool(gameTypeChanged, forKey: "gameTypeChanged")
         defaults.setObject(gameplay.possibleWords, forKey: "possibleWords")
@@ -203,7 +262,8 @@ class Game {
     private func printContentDefaults() {
         print("guesses: "+String(defaults.arrayForKey("guesses") as! [Int]))
         print("money: "+String(defaults.integerForKey("money")))
-        print("highscores: "+String(defaults.dictionaryForKey("highscores") as! [String:[String:Int]]))
+        print("goodHighscores: "+String(defaults.objectForKey("goodHighscores") as! [Int:[String]]))
+        print("evilHighscores: "+String(defaults.objectForKey("evilHighscores") as! [Int:[String]]))
         print("currentGameType: "+defaults.stringForKey("currentGameType")!)
         print("gameTypeChanged: "+String(defaults.boolForKey("gameTypeChanged")))
         print("actions: "+String(defaults.arrayForKey("actions") as! [String]))

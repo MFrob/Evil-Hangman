@@ -56,6 +56,9 @@ class FinishViewController: UIViewController {
         showDrawing()
         
         displayLabel.text = game.getCorrectWord()
+        if game.wonGame() && game.checkHighscore(score[0]) {
+            // Display something.....
+        }
         game.startNewGame()
         // Do any additional setup after loading the view, typically from a nib.
     }

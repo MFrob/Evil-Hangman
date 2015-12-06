@@ -12,9 +12,7 @@ class GoodGameplay : Gameplay {
 	
 	// Initialize the GoodGameplay class.
 	override init() {
-        print("in init")
         super.init()
-        print("done super init")
         pickWord()
         display = [Character](count: possibleWords[0].characters.count, repeatedValue: "_")
 	}
@@ -52,7 +50,8 @@ class GoodGameplay : Gameplay {
                 newCorpus.append(word)
             }
         }
-        let randomIndex = arc4random() % UInt32(possibleWords.count-1)
+        
+        let randomIndex = arc4random() % UInt32(newCorpus.count-1)
 		possibleWords = [newCorpus[Int(randomIndex)].lowercaseString]
         print("Picked word:"+possibleWords[0])
 	}
