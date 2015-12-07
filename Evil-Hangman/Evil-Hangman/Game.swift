@@ -266,6 +266,8 @@ class Game {
         print("evilHighscores: "+String(defaults.objectForKey("evilHighscores") as! [Int:[String]]))
         print("currentGameType: "+defaults.stringForKey("currentGameType")!)
         print("gameTypeChanged: "+String(defaults.boolForKey("gameTypeChanged")))
-        print("actions: "+String(defaults.arrayForKey("actions") as! [String]))
+		print("possibleWords: "+String(defaults.arrayForKey("possibleWords") as! [String]))
+		print("maxWordLength: "+String(defaults.integerForKey("maxWordLength")))
+		print("actions: "+String(defaults.arrayForKey("actions") as! [String]))
     }
 }
