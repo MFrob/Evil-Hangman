@@ -33,11 +33,10 @@ class Game {
         initializeDefaults()
     }
     
-    // Initialze the Game class.
     init(defaults:NSUserDefaults) {
         self.defaults = defaults
+		// If defaults is already set.
         if defaults.stringForKey("currentGameType") != nil {
-            
             guesses = defaults.arrayForKey("guesses") as! [Int]
             money = defaults.integerForKey("money")
             goodHighscores = defaults.objectForKey("goodHighscores") as! [Int:[String]]
@@ -52,6 +51,7 @@ class Game {
             } else {
                 gameplay = EvilGameplay(possibleWords: possibleWords, maxWordLength: maxWordLength)
             }
+		// If defaults is not yet set.
         } else {
             gameplay = GoodGameplay()
             guesses = [0,0]
@@ -65,7 +65,6 @@ class Game {
         }
     }
     
-    // Start a new game.
     func startNewGame() {
         guesses = [0,0]
         if gameTypeChanged {
@@ -106,7 +105,6 @@ class Game {
         return !getDisplay().containsString("_")
     }
     
-    // Check if the user lost the game.
     func lostGame() -> Bool {
         if guesses[1] == 11 {
             return true
@@ -119,6 +117,7 @@ class Game {
         return [100,100]
     }
     
+	/// Check if the given score is a highscore.
     func checkHighscore(score:Int) -> Bool {
         var highscores:[Int:[String]]
         if currentGameType == "goodGameplay" {
@@ -143,6 +142,7 @@ class Game {
         return false
     }
     
+	/// Add the given highscore to the highscores.
     func addHighscore(score:Int, name:String) {
         var highscores:[Int:[String]]
         if currentGameType == "goodGameplay" {
@@ -208,12 +208,10 @@ class Game {
         return false
     }
     
-    // Return the number of wrong guesses the user made.
     func getCorrectGuesses() -> Int {
         return guesses[0]
     }
     
-    // Return the number of wrong guesses the user made.
     func getWrongGuesses() -> Int {
         return guesses[1]
     }
@@ -233,6 +231,7 @@ class Game {
         return display.uppercaseString
     }
     
+	/// Returns the display of gameplay as a String.
     func getCorrectWord() -> String {
         var display = ""
         var index = 0
