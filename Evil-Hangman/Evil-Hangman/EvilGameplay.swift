@@ -5,21 +5,27 @@
 //  Created by Mees Fröberg on 02/12/15.
 //  Copyright © 2015 Mees Fröberg. All rights reserved.
 //
+// This class is the representation of the evil gameplay type.
 
 import Foundation
 
 class EvilGameplay : Gameplay {
-    
-    // Initialize the GoodGameplay class.
+	// This is a dictionary with a display as key and an array of words that match the display.
+	private var displayWords:[String:[String]]
+	
+	// This is a dictionary that has the number of correctly guessed characters as key and the corresponding display as value.
+	private var correctDisplay:[Int:[Character]]
+	
     override init() {
         super.init()
+		newGame()
     }
     
+	/// Initialize the EvilGameplay class with the given possible words and max word length.
     override init(possibleWords:[String], maxWordLength:Int) {
         super.init(possibleWords: possibleWords, maxWordLength: maxWordLength)
     }
     
-    // Start a new game.
     override func newGame() {
         let wordLength = pickPossibleWords()
         display = [Character](count: wordLength, repeatedValue: "_")
@@ -27,43 +33,67 @@ class EvilGameplay : Gameplay {
     
     // Handles the input and returns true if the guess was correct and false otherwise.
     override func handleInput(input:Character) -> Bool {
-        var displayWords = [String:[String]]()
-        var correctDisplay = [Int:[Character]]()
+        displayWords = [String:[String]]()
+        correctDisplay = [Int:[Character]]()
         
         for word in possibleWords {
-            var newDisplay = display
-            var correct = 0
-            if word.characters.contains(input) {
-                var index = 0
-                for char in word.characters {
-                    if char == input{
-                        newDisplay[index] = char
-                        correct = correct + 1
-                    }
-                    index = index + 1
-                }
-            }
-            
+			let newDisplay = getCorrespondingDisplay(word:word, input:input)
+            let correctGuesses = getCorrectGuesses(newDisplay)
+			
             if var value = displayWords[String(newDisplay)] {
                 value.append(word)
                 displayWords[String(newDisplay)] = value
             } else {
                 displayWords[String(newDisplay)] = [word]
-                correctDisplay[correct] = newDisplay
+                correctDisplay[correctGuesses] = newDisplay
             }
         }
         
-        let best = Array(correctDisplay.keys).minElement()
+		return makeOptimalDecision()
+    }
+	
+	/// Returns the new display of the given word after the given input.
+	private func getCorrespondingDisplay(word:String, input:Character) -> [Character] {
+		var newDisplay = display
+		if word.characters.contains(input) {
+			var index = 0
+			for char in word.characters {
+				if char == input{
+					newDisplay[index] = char
+				}
+				index = index + 1
+			}
+		}
+	}
+	
+	/// Returns the amount of correctly guessed characters.
+	private func getCorrectGuesses(newDisplay:[Character]) {
+		var correctGuesses = 0
+		var index = 0
+		for char in newDisplay {
+			if char != display[index] {
+				correctGuesses = correctGuesses + 1
+			}
+			index = index + 1
+		}
+		
+		return correctGuesses
+	}
+	
+	/// Selects the array of possible words with the least correct guesses. If this amount is 0 return false else return true.
+	private func makeOptimalDecision() -> Bool{
+		let best = Array(correctDisplay.keys).minElement()
         display = correctDisplay[best!]!
         possibleWords = displayWords[String(display)]!
-        if best == 0 {
+		
+		if best == 0 {
             return false
         }
         return true
-    }
+	}
     
-    // Select a random word from the corpus.s
-    func pickPossibleWords() -> Int {
+    /// Select a random word from the corpus.
+    private func pickPossibleWords() -> Int {
         possibleWords = []
         let wordLength = Int(arc4random_uniform(UInt32(maxWordLength)))
         for word in corpus {
@@ -72,9 +102,5 @@ class EvilGameplay : Gameplay {
             }
         }
         return wordLength
-    }
-    
-    func getPossibleWords() -> [String] {
-        return possibleWords
     }
 }

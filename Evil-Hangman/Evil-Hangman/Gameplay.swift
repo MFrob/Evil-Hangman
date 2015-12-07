@@ -5,6 +5,7 @@
 //  Created by Mees Fröberg on 11/11/15.
 //  Copyright © 2015 Mees. All rights reserved.
 //
+// This class is the representation of general gameplay. Every type of gameplay has to contain the features in this class.
 
 import Foundation
 
@@ -14,7 +15,6 @@ class Gameplay {
 	internal var corpus:[String]
     internal var possibleWords:[String]
 	
-	// Initialize the Gameplay class.
 	init() {
 		display = [Character]()
         maxWordLength = 6
@@ -23,6 +23,7 @@ class Gameplay {
         loadCorpus("words")
 	}
     
+	/// Initialize the GoodGameplay class with the given possible words and max word length.
     init(possibleWords:[String], maxWordLength:Int) {
         self.maxWordLength = maxWordLength
         self.corpus = [String]()
@@ -31,21 +32,28 @@ class Gameplay {
         loadCorpus("words")
     }
 	
-	// Start a new game.
     func newGame() {
         preconditionFailure("This function must be overridden")
 	}
 	
-	// Handles the input and returns true if the guess was correct and false otherwise.
 	func handleInput(input:Character) -> Bool {
         preconditionFailure("This function must be overridden")
 	}
+	
+    func changeMaxWordLength(length:Int) {
+        maxWordLength = length
+    }
+    
+	/// Load the corpus from the given .plist file.
+    private func loadCorpus(filename:String) {
+        let path = NSBundle.mainBundle().pathForResource(filename, ofType: "plist")
+        corpus = NSArray(contentsOfFile: path!) as! [String]
+    }
     
     func getCorrectWord() -> String {
         return possibleWords[0]
     }
 	
-	// Return the display.
 	func getDisplay() -> [Character] {
 		return display
 	}
@@ -53,13 +61,8 @@ class Gameplay {
     func getMaxWordLenght() -> Int {
         return maxWordLength
     }
-    
-    func changeMaxWordLength(length:Int) {
-        maxWordLength = length
-    }
-    
-    private func loadCorpus(filename:String) {
-        let path = NSBundle.mainBundle().pathForResource(filename, ofType: "plist")
-        corpus = NSArray(contentsOfFile: path!) as! [String]
-    }
+	
+	func getPossibleWords() -> [String] {
+		return possibleWords
+	}
 }
