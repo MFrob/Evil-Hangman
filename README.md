@@ -13,4 +13,4 @@ List of features:
 
 
 Sketches of the complete user experience:<br/>
-![alt text](https://github.com/MFrob/Evil-Hangman/blob/master/Scan2.png "sketches")
+![alt text](https://github.com/MFrob/Evil-Hangman/blob/master/Picture/SketchesEntireUserExp.png "sketches")
