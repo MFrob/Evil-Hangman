@@ -7,7 +7,7 @@
 //
 import UIKit
 
-class HighscoresViewController: UIViewController {
+class HighscoresViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     var game:Game!
     var returnSegue:String!
@@ -34,4 +34,27 @@ class HighscoresViewController: UIViewController {
             destination.game = game
         }
     }
+    
+    // Delegate methods
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 0
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        if tableView == listsOutlet {
+            let cell = listsOutlet.dequeueReusableCellWithIdentifier("TextCell", forIndexPath: indexPath)
+            
+            let row = indexPath.row
+            let listsData = defaults.arrayForKey("listData") as! [String]
+            cell.textLabel?.text = listsData[row]
+            
+            return cell
+        }
+        return UITableViewCell()
+    }
+    
 }
