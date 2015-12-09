@@ -23,7 +23,13 @@ class EvilGameplay : Gameplay {
 		newGame()
     }
     
-	/// Initialize the EvilGameplay class with the given possible words and max word length.
+    override init(maxWordLength:Int) {
+        displayWords = [String:[String]]()
+        correctDisplay = [Int:[Character]]()
+        super.init(maxWordLength:maxWordLength)
+        newGame()
+    }
+    
     override init(possibleWords:[String], maxWordLength:Int) {
         displayWords = [String:[String]]()
         correctDisplay = [Int:[Character]]()
@@ -88,7 +94,6 @@ class EvilGameplay : Gameplay {
 		let best = Array(correctDisplay.keys).minElement()
         display = correctDisplay[best!]!
         possibleWords = displayWords[String(display)]!
-		print("possibleWords:"+String(possibleWords))
 		if best == 0 {
             return false
         }
@@ -104,7 +109,6 @@ class EvilGameplay : Gameplay {
                 possibleWords.append(word)
             }
         }
-        print("possibleWords:"+String(possibleWords))
         return wordLength
     }
 }

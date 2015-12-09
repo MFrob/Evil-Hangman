@@ -16,7 +16,11 @@ class GoodGameplay : Gameplay {
         newGame()
 	}
     
-	/// Initialize the GoodGameplay class with the given possible words and max word length.
+    override init(maxWordLength:Int) {
+        super.init(maxWordLength:maxWordLength)
+        newGame()
+    }
+    
     override init(possibleWords:[String], maxWordLength:Int) {
         super.init(possibleWords: possibleWords, maxWordLength: maxWordLength)
     }
@@ -53,6 +57,5 @@ class GoodGameplay : Gameplay {
 		// Select a random word from the new corpus.
         let randomIndex = arc4random() % UInt32(newCorpus.count-1)
 		possibleWords = [newCorpus[Int(randomIndex)].uppercaseString]
-        print("Picked word:"+possibleWords[0])
 	}
 }

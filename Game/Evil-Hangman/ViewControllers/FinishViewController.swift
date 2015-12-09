@@ -12,6 +12,7 @@ class FinishViewController: UIViewController {
     
     let defaults = NSUserDefaults.standardUserDefaults()
     var game:Game!
+    var checkHighscore = false
     
     // Label outlets.
     @IBOutlet weak var feedbackLabel: UILabel!
@@ -54,10 +55,34 @@ class FinishViewController: UIViewController {
         moneyLabel.text = "$"+String(game.getMoney())
         
         showDrawing()
-        
         displayLabel.text = game.getCorrectWord()
-        if game.wonGame() && game.checkHighscore(score[0]) {
-            // Display something.....
+        if game.wonGame() && checkHighscore && game.checkHighscore(score[0]) {
+            print("New highscore!!")
+            var alertController:UIAlertController?
+            alertController = UIAlertController(title: "New Highscore!",
+                message: "Score: "+String(score[0]),
+                preferredStyle: .Alert)
+            
+            alertController!.addTextFieldWithConfigurationHandler(
+                {(textField: UITextField!) in
+                    textField.placeholder = "Enter name"
+            })
+            
+            let action = UIAlertAction(title: "Submit",
+                style: UIAlertActionStyle.Default,
+                handler: {[weak self]
+                    (paramAction:UIAlertAction!) in
+                    if let textFields = alertController?.textFields{
+                        let theTextFields = textFields as [UITextField]
+                        let enteredText = theTextFields[0].text
+                        self!.displayLabel.text = enteredText
+                    }
+                })
+            
+            alertController?.addAction(action)
+            self.presentViewController(alertController!,
+                animated: true,
+                completion: nil)
         }
     }
     

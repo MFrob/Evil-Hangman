@@ -81,6 +81,7 @@ class GameViewController: UIViewController {
 	override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "finish" {
             let destination = segue.destinationViewController as! FinishViewController
+            destination.checkHighscore = true
             destination.game = game
         } else if segue.identifier == "menu" {
             let destination = segue.destinationViewController as! MenuViewController

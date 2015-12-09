@@ -23,6 +23,14 @@ class Gameplay {
         loadCorpus("words")
 	}
     
+    init(maxWordLength:Int) {
+        display = [Character]()
+        self.maxWordLength = maxWordLength
+        corpus = [String]()
+        possibleWords = [String]()
+        loadCorpus("words")
+    }
+    
 	/// Initialize the GoodGameplay class with the given possible words and max word length.
     init(possibleWords:[String], maxWordLength:Int) {
         self.maxWordLength = maxWordLength
