@@ -17,3 +17,5 @@ The MenuViewController is the ViewController of the menu screen. On this screen 
 
 The ManualViewController is the ViewController of the manual screen. On this screen the user will be able to read the manual instructions of the game. <br/>
 <img src="https://github.com/MFrob/Evil-Hangman/blob/master/Pictures/manualView.png" width="200">
+
+Below is an overview of all the model classes in the game.<br/>
