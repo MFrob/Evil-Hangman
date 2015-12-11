@@ -5,6 +5,8 @@
 //  Created by Mees Fröberg on 19/11/15.
 //  Copyright © 2015 Mees Fröberg. All rights reserved.
 //
+// This is the ViewController of the game screen. In this screen the user is playing
+// a hangman game.
 
 import UIKit
 
@@ -37,38 +39,41 @@ class GameViewController: UIViewController {
         	initializeGame()
         }
         setLabels()
-        drawDrawing()
+        showDrawing()
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
+    /// This function is triggered when the user presses a button on the keyboard. Therefore this function
+    /// handles the input of the user.
     @IBAction func inputAction(sender: AnyObject) {
         let button = sender as! UIButton
         if game.handleInput(button.titleLabel!.text!) {
             button.backgroundColor = UIColor.greenColor()
         } else {
             button.backgroundColor = UIColor.redColor()
-            drawDrawing()
+            showDrawing()
         }
         displayLabel.text = game.getDisplay()
         button.enabled = false
+        
         if game.wonGame() || game.lostGame() {
             game.addMoney(game.computeScore()[1])
             self.performSegueWithIdentifier("finish", sender: sender)
         }
     }
 
-
+	/// This function is triggered when the user presses the menu button.
     @IBAction func menu(sender: AnyObject) {
         self.performSegueWithIdentifier("menu", sender: sender)
     }
     
+    /// This function is triggered when the user pressed the erase button.
     @IBAction func eraseAction(sender: AnyObject) {
         game.eraseError()
-        drawDrawing()
+        showDrawing()
         moneyLabel.text = "$"+String(defaults.integerForKey("money"))
     }
     
@@ -83,6 +88,8 @@ class GameViewController: UIViewController {
         }
 	}
     
+    /// This function initializes the game. To do this the game property must be 
+    /// initialized and the button propperties must be configured.
 	private func initializeGame() {
         game = Game(defaults:defaults)
         let buttons = getButtons()
@@ -107,11 +114,11 @@ class GameViewController: UIViewController {
                 }
             }
         }
-        
         finishedGame(buttons)
     }
     
-    private func drawDrawing() {
+    /// Displays the hangman drawing correctly. This depends on the number of errors the user made.
+    private func showDrawing() {
         let errors = game.getWrongGuesses()
         switch errors {
         case 1:
@@ -161,6 +168,7 @@ class GameViewController: UIViewController {
         }
     }
     
+    /// Checks if the game is already won/lost and handles appropriately.
     private func finishedGame(buttons:[UIButton]) {
     	if game.wonGame() || game.lostGame() {
     		game.startNewGame()
@@ -171,6 +179,7 @@ class GameViewController: UIViewController {
     	}
     }
     
+    /// Returns an array of all the buttons on the keyboard.
     private func getButtons() -> [UIButton] {
         var buttons:[UIButton] = []
         for everything in self.view.subviews {
@@ -186,6 +195,7 @@ class GameViewController: UIViewController {
         return buttons
     }
     
+    /// Returns an array of all the buttons in buttonGroup1.
     private func getButtonsGroup1(keyboard:UIView) -> [UIButton]{
         var buttons:[UIButton] = []
         for buttonGroup in keyboard.subviews {
@@ -202,6 +212,7 @@ class GameViewController: UIViewController {
         return buttons
     }
     
+    /// Returns an array of all the buttons in buttonGroup2.
     private func getButtonsGroup2(keyboard:UIView) -> [UIButton] {
         var buttons:[UIButton] = []
         for buttonGroup in keyboard.subviews {
@@ -218,6 +229,7 @@ class GameViewController: UIViewController {
         return buttons
     }
     
+    /// This function gives all the labels on the screen the correct text. This depends on the game.
     private func setLabels() {
         moneyLabel.text = "$"+String(game.getMoney())
         
