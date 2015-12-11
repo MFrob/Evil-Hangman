@@ -5,6 +5,8 @@
 //  Created by Mees Fröberg on 02/12/15.
 //  Copyright © 2015 Mees Fröberg. All rights reserved.
 //
+// The ViewController of the finish screen. In this screen the user finished 
+// a game and the results of his game will be displayed.
 
 import UIKit
 
@@ -85,6 +87,7 @@ class FinishViewController: UIViewController {
         }
     }
     
+    /// Displays the hangman drawing correctly. This depends on the number of errors the user made.
     private func showDrawing() {
         let errors = game.getWrongGuesses()
         switch errors {
@@ -115,6 +118,7 @@ class FinishViewController: UIViewController {
         }
     }
     
+    /// This function shows a highscore submit alert.
     private func showHighscoreAlert(score:Int) {
         var alertController:UIAlertController?
         alertController = UIAlertController(title: "New Highscore!",
@@ -140,6 +144,7 @@ class FinishViewController: UIViewController {
         })
     }
     
+    /// This function gives all the labels on the screen the correct text. This depends on the game.
     private func setLabels(score:[Int]) {
         scoreLabel.text = "Score: "+String(score[0])
         madeMoneyLabel.text = "+$"+String(score[1])
