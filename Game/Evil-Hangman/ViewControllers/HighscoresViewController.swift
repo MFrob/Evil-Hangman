@@ -5,6 +5,9 @@
 //  Created by Mees Fröberg on 08/12/15.
 //  Copyright © 2015 Mees Fröberg. All rights reserved.
 //
+// This is the ViewController of the highscores screen. In this screen a list of all the highscores
+// is displayed.
+
 import UIKit
 
 class HighscoresViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
@@ -14,6 +17,7 @@ class HighscoresViewController: UIViewController, UITableViewDelegate, UITableVi
     var hNames:[String]!
     var hScores:[String]!
     
+    // Outlets.
     @IBOutlet weak var moneyLabel: UILabel!
     @IBOutlet weak var highscoresTableView: UITableView!
     @IBOutlet weak var switchGameType: UISegmentedControl!
@@ -32,10 +36,13 @@ class HighscoresViewController: UIViewController, UITableViewDelegate, UITableVi
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
+    
+    /// This function is triggered when the user pressed the back button.
     @IBAction func back(sender: AnyObject) {
         self.performSegueWithIdentifier(returnSegue, sender: sender)
     }
     
+    /// This function is triggered when the user switched the gameplay type.
     @IBAction func switchGameTypeAction(sender: AnyObject) {
         if switchGameType.selectedSegmentIndex == 0 {
             getHighscores("GoodGameplay")
@@ -55,7 +62,6 @@ class HighscoresViewController: UIViewController, UITableViewDelegate, UITableVi
         }
     }
     
-    // Delegate methods
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }
@@ -83,6 +89,7 @@ class HighscoresViewController: UIViewController, UITableViewDelegate, UITableVi
         return UITableViewCell()
     }
     
+    /// Initializes the arrays that are used to display the highscores in the table view, given the gameplay type.
     private func getHighscores(gametype:String) {
         var highscores:[String:[String]]
         if gametype == "GoodGameplay" {
@@ -103,6 +110,7 @@ class HighscoresViewController: UIViewController, UITableViewDelegate, UITableVi
         }
     }
     
+    /// Initializes the switch.
     private func setSwitch() {
         if game.getCurrentGameType() == "GoodGameplay" {
             switchGameType.selectedSegmentIndex = 0
