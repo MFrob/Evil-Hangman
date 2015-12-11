@@ -6,7 +6,6 @@
 //  Copyright © 2015 Mees. All rights reserved.
 //
 // This is the main class that is used to play the hangman game.
-//
 
 import Foundation
 
@@ -86,7 +85,7 @@ class Game {
         updateDefaults()
     }
     
-    // Handle the given input of the user. Returns true if the input is correct else false
+    /// Handle the given input of the user. Returns true if the input is correct else false.
     func handleInput(input:String) -> Bool {
         actions.append(input)
         if gameplay.handleInput(Character(input.uppercaseString)) {
@@ -110,6 +109,7 @@ class Game {
         return false
     }
     
+    /// Compute the score and the earned money of this game.
     func computeScore() -> [Int] {
         var score:Int
         var madeMoney:Int
@@ -126,7 +126,7 @@ class Game {
         return [score,madeMoney]
     }
     
-	/// Check if the given score is a highscore.
+    /// Check if the given score is a highscore.
     func checkHighscore(score:Int) -> Bool {
         var highscores:[String:[String]]
         if currentGameType == "goodGameplay" {
@@ -135,23 +135,16 @@ class Game {
             highscores = evilHighscores
         }
         
-        // Return true if the score is a highscore
-        var number = 0
+        // Return true if the score is a highscore.
         for highscore in highscores.keys {
             if score >= Int(highscore) {
                 return true
             }
-            number = number + highscores[highscore]!.count
         }
-        
-        if number < 10 {
-            return true
-        }
-        
         return false
     }
-    /////////////// TODO: COMMENTS AND CHECK IF WORKING!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-	/// Add the given highscore to the highscores.
+    
+    /// Add the given highscore to the highscores.
     func addHighscore(score:String, name:String) {
         addScore(score, name: name)
         let numberOfHighscores = getNumberOfHighscores()
@@ -162,6 +155,7 @@ class Game {
         updateDefaults()
     }
     
+    /// Add the given score to the corresponding highscores dictionary.
     private func addScore(score:String, name:String) {
         if currentGameType == "GoodGameplay" {
             if goodHighscores[score] == nil {
@@ -182,6 +176,7 @@ class Game {
         }
     }
     
+    /// Remove the oldest/lowest highscore from the highscores dictionary.
     private func removeLowestHighscore() {
         if currentGameType == "GoodGameplay" {
             let scores = goodHighscores.keys.sort(>)
@@ -320,6 +315,7 @@ class Game {
         return number
     }
     
+    /// Update the NSUserDefaults dictionary with the current values of the game. In other words: save the game.
     private func updateDefaults() {
         defaults.setInteger(money, forKey: "money")
         defaults.setObject(goodHighscores, forKey: "goodHighscores")
