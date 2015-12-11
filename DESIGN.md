@@ -19,3 +19,4 @@ The ManualViewController is the ViewController of the manual screen. On this scr
 <img src="https://github.com/MFrob/Evil-Hangman/blob/master/Pictures/manualView.png" width="200">
 
 Below is an overview of all the model classes in the game.<br/>
+<img src="https://github.com/MFrob/Evil-Hangman/blob/master/Pictures/modelClasses.jpg" width="800">
