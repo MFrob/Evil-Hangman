@@ -36,14 +36,8 @@ class GameViewController: UIViewController {
         if game == nil {
         	initializeGame()
         }
+        setLabels()
         drawDrawing()
-        displayLabel.text = game.getDisplay()
-        if defaults.stringForKey("currentGameType")! == "GoodGameplay" {
-            titleLabel.text = "Good"
-        } else {
-            titleLabel.text = "Evil"
-        }
-        moneyLabel.text = "$"+String(game.getMoney())
     }
 
     override func didReceiveMemoryWarning() {
@@ -183,29 +177,55 @@ class GameViewController: UIViewController {
             if everything.tag == 1 {
                 for keyboard in everything.subviews {
                     if keyboard.tag == 2 {
-                        for buttonGroup in keyboard.subviews {
-                            if buttonGroup.tag == 3 {
-                                for but in buttonGroup.subviews {
-                                    if but.tag == 4 {
-                                        buttons = but.subviews as! [UIButton]
-                                    } else if but.tag == 5 {
-                                        buttons += but.subviews as! [UIButton]
-                                    }
-                                }
-                            } else if buttonGroup.tag == 6 {
-                                for but in buttonGroup.subviews {
-                                    if but.tag == 7 {
-                                        buttons += but.subviews as! [UIButton]
-                                    } else if but.tag == 8 {
-                                        buttons += but.subviews as! [UIButton]
-                                    }
-                                }
-                            }
-                        }
+                        buttons = getButtonsGroup1(keyboard)
+                        buttons += getButtonsGroup2(keyboard)
                     }
                 }
             }
         }
         return buttons
+    }
+    
+    private func getButtonsGroup1(keyboard:UIView) -> [UIButton]{
+        var buttons:[UIButton] = []
+        for buttonGroup in keyboard.subviews {
+            if buttonGroup.tag == 3 {
+                for but in buttonGroup.subviews {
+                    if but.tag == 4 {
+                        buttons = but.subviews as! [UIButton]
+                    } else if but.tag == 5 {
+                        buttons += but.subviews as! [UIButton]
+                    }
+                }
+            }
+        }
+        return buttons
+    }
+    
+    private func getButtonsGroup2(keyboard:UIView) -> [UIButton] {
+        var buttons:[UIButton] = []
+        for buttonGroup in keyboard.subviews {
+            if buttonGroup.tag == 6 {
+                for but in buttonGroup.subviews {
+                    if but.tag == 7 {
+                        buttons = but.subviews as! [UIButton]
+                    } else if but.tag == 8 {
+                        buttons += but.subviews as! [UIButton]
+                    }
+                }
+            }
+        }
+        return buttons
+    }
+    
+    private func setLabels() {
+        moneyLabel.text = "$"+String(game.getMoney())
+        
+        displayLabel.text = game.getDisplay()
+        if defaults.stringForKey("currentGameType")! == "GoodGameplay" {
+            titleLabel.text = "Good"
+        } else {
+            titleLabel.text = "Evil"
+        }
     }
 }

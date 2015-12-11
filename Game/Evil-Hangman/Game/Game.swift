@@ -14,8 +14,8 @@ class Game {
     private var gameplay:Gameplay
     private var guesses:[Int]
     private var money:Int
-    private var goodHighscores:[Int:[String]]
-    private var evilHighscores:[Int:[String]]
+    private var goodHighscores:[String:[String]]
+    private var evilHighscores:[String:[String]]
     private var currentGameType:String
     private var gameTypeChanged:Bool
     private var defaults:NSUserDefaults
@@ -23,12 +23,12 @@ class Game {
     
     init() {
         defaults = NSUserDefaults.standardUserDefaults()
-        gameplay = EvilGameplay()
+        gameplay = GoodGameplay()
         guesses = [0,0]
         money = 100
-        goodHighscores = [Int:[String]]()
-        evilHighscores = [Int:[String]]()
-        currentGameType = "EvilGameplay"
+        goodHighscores = [String:[String]]()
+        evilHighscores = [String:[String]]()
+        currentGameType = "GoodGameplay"
         gameTypeChanged = false
         actions = [String]()
         updateDefaults()
@@ -38,13 +38,13 @@ class Game {
         self.defaults = defaults
 		// If defaults is already set.
         if defaults.stringForKey("currentGameType") != nil {
-            guesses = defaults.arrayForKey("guesses") as! [Int]
+            guesses = [0,0]
             money = defaults.integerForKey("money")
-            goodHighscores = defaults.objectForKey("goodHighscores") as! [Int:[String]]
-            evilHighscores = defaults.objectForKey("evilHighscores") as! [Int:[String]]
+            goodHighscores = defaults.objectForKey("goodHighscores") as! [String:[String]]
+            evilHighscores = defaults.objectForKey("evilHighscores") as! [String:[String]]
             currentGameType = defaults.stringForKey("currentGameType")!
             gameTypeChanged = defaults.boolForKey("gameTypeChanged")
-            actions = defaults.arrayForKey("actions") as! [String]
+            actions = [String]()
             
             let possibleWords = defaults.arrayForKey("possibleWords") as! [String]
             let maxWordLength = defaults.integerForKey("maxWordLength")
@@ -58,8 +58,8 @@ class Game {
             gameplay = GoodGameplay()
             guesses = [0,0]
             money = 100
-            goodHighscores = [Int:[String]]()
-            evilHighscores = [Int:[String]]()
+            goodHighscores = [String:[String]]()
+            evilHighscores = [String:[String]]()
             currentGameType = "GoodGameplay"
             gameTypeChanged = false
             actions = [String]()
@@ -128,7 +128,7 @@ class Game {
     
 	/// Check if the given score is a highscore.
     func checkHighscore(score:Int) -> Bool {
-        var highscores:[Int:[String]]
+        var highscores:[String:[String]]
         if currentGameType == "goodGameplay" {
             highscores = goodHighscores
         } else {
@@ -138,7 +138,7 @@ class Game {
         // Return true if the score is a highscore
         var number = 0
         for highscore in highscores.keys {
-            if score >= highscore {
+            if score >= Int(highscore) {
                 return true
             }
             number = number + highscores[highscore]!.count
@@ -152,45 +152,58 @@ class Game {
     }
     /////////////// TODO: COMMENTS AND CHECK IF WORKING!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	/// Add the given highscore to the highscores.
-    func addHighscore(score:Int, name:String) {
-        var highscores:[Int:[String]]
-        if currentGameType == "goodGameplay" {
-            highscores = goodHighscores
-        } else {
-            highscores = evilHighscores
+    func addHighscore(score:String, name:String) {
+        addScore(score, name: name)
+        let numberOfHighscores = getNumberOfHighscores()
+        if numberOfHighscores > 10 {
+            removeLowestHighscore()
         }
         
-        highscores = addScore(score, name: name, hscores: highscores)
-        highscores = removeLowestHighscore(highscores)
-        // Remove lowest/oldest highscore.
-        
-        defaults.setObject(goodHighscores, forKey: "goodHighscores")
-        defaults.setObject(evilHighscores, forKey: "evilHighscores")
+        updateDefaults()
     }
     
-    private func addScore(score:Int, name:String, hscores:[Int:[String]]) -> [Int:[String]] {
-        var highscores = hscores
-        if highscores[score] == nil {
-            highscores.updateValue([name], forKey: score)
+    private func addScore(score:String, name:String) {
+        if currentGameType == "GoodGameplay" {
+            if goodHighscores[score] == nil {
+                goodHighscores.updateValue([name], forKey: score)
+            } else {
+                var value = goodHighscores[score]!
+                value.insert(name, atIndex: 0)
+                goodHighscores.updateValue(value, forKey: score)
+            }
         } else {
-            var value = highscores[score]!
-            value.insert(name, atIndex: 0)
-            highscores.updateValue(value, forKey: score)
+            if evilHighscores[score] == nil {
+                evilHighscores.updateValue([name], forKey: score)
+            } else {
+                var value = evilHighscores[score]!
+                value.insert(name, atIndex: 0)
+                evilHighscores.updateValue(value, forKey: score)
+            }
         }
-        return highscores
     }
     
-    private func removeLowestHighscore(hscores:[Int:[String]]) -> [Int:[String]] {
-        var highscores = hscores
-        let scores = highscores.keys.sort(>)
-        var value = highscores[scores[scores.count-1]]!
-        if value.count == 1 {
-            highscores.removeValueForKey(scores[scores.count-1])
+    private func removeLowestHighscore() {
+        if currentGameType == "GoodGameplay" {
+            let scores = goodHighscores.keys.sort(>)
+            
+            var value = goodHighscores[scores[scores.count-1]]!
+            if value.count == 1 {
+                goodHighscores.removeValueForKey(scores[scores.count-1])
+            } else {
+                value.removeAtIndex(value.count-1)
+                goodHighscores.updateValue(value, forKey: scores[scores.count-1])
+            }
         } else {
-            value.removeAtIndex(value.count-1)
-            highscores.updateValue(value, forKey: scores[scores.count-1])
+            let scores = evilHighscores.keys.sort(>)
+            
+            var value = evilHighscores[scores[scores.count-1]]!
+            if value.count == 1 {
+                evilHighscores.removeValueForKey(scores[scores.count-1])
+            } else {
+                value.removeAtIndex(value.count-1)
+                evilHighscores.updateValue(value, forKey: scores[scores.count-1])
+            }
         }
-		return highscores
     }
     
     func changeGameplay() {
@@ -285,16 +298,29 @@ class Game {
         return gameTypeChanged
     }
     
-    func getGoodHighscores() -> [Int:[String]] {
+    func getGoodHighscores() -> [String:[String]] {
         return goodHighscores
     }
     
-    func getEvilHighscores() -> [Int:[String]] {
+    func getEvilHighscores() -> [String:[String]] {
         return evilHighscores
     }
     
+    private func getNumberOfHighscores() -> Int {
+        var number = 0
+        if currentGameType == "GoodGameplay" {
+            for key in goodHighscores.keys {
+                number = number + goodHighscores[key]!.count
+            }
+        } else {
+            for key in evilHighscores.keys {
+                number = number + evilHighscores[key]!.count
+            }
+        }
+        return number
+    }
+    
     private func updateDefaults() {
-        defaults.setObject(guesses, forKey: "guesses")
         defaults.setInteger(money, forKey: "money")
         defaults.setObject(goodHighscores, forKey: "goodHighscores")
         defaults.setObject(evilHighscores, forKey: "evilHighscores")
@@ -302,14 +328,13 @@ class Game {
         defaults.setBool(gameTypeChanged, forKey: "gameTypeChanged")
         defaults.setObject(gameplay.possibleWords, forKey: "possibleWords")
         defaults.setInteger(gameplay.maxWordLength, forKey: "maxWordLength")
-        defaults.setObject([String](), forKey: "actions")
+        defaults.setObject(actions, forKey: "actions")
     }
     
-    private func printContentDefaults() {
-        print("guesses: "+String(defaults.arrayForKey("guesses") as! [Int]))
+    func printContentDefaults() {
         print("money: "+String(defaults.integerForKey("money")))
-        print("goodHighscores: "+String(defaults.objectForKey("goodHighscores") as! [Int:[String]]))
-        print("evilHighscores: "+String(defaults.objectForKey("evilHighscores") as! [Int:[String]]))
+        print("goodHighscores: "+String(defaults.objectForKey("goodHighscores") as! [String:[String]]))
+        print("evilHighscores: "+String(defaults.objectForKey("evilHighscores") as! [String:[String]]))
         print("currentGameType: "+defaults.stringForKey("currentGameType")!)
         print("gameTypeChanged: "+String(defaults.boolForKey("gameTypeChanged")))
 		print("possibleWords: "+String(defaults.arrayForKey("possibleWords") as! [String]))

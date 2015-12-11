@@ -57,5 +57,6 @@ class GoodGameplay : Gameplay {
 		// Select a random word from the new corpus.
         let randomIndex = arc4random() % UInt32(newCorpus.count-1)
 		possibleWords = [newCorpus[Int(randomIndex)].uppercaseString]
+        print("picked word:"+possibleWords[0])
 	}
 }

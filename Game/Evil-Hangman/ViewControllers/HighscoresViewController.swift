@@ -12,7 +12,7 @@ class HighscoresViewController: UIViewController, UITableViewDelegate, UITableVi
     var game:Game!
     var returnSegue:String!
     var hNames:[String]!
-    var hScores:[Int]!
+    var hScores:[String]!
     
     @IBOutlet weak var moneyLabel: UILabel!
     @IBOutlet weak var highscoresTableView: UITableView!
@@ -74,7 +74,7 @@ class HighscoresViewController: UIViewController, UITableViewDelegate, UITableVi
                 cell.detailTextLabel?.text = "Score"
             } else {
                 cell.textLabel?.text = String(row)+"."+hNames[row-1]
-                cell.detailTextLabel?.text = String(hScores[row-1])
+                cell.detailTextLabel?.text = hScores[row-1]
             }
             
             
@@ -84,7 +84,7 @@ class HighscoresViewController: UIViewController, UITableViewDelegate, UITableVi
     }
     
     private func getHighscores(gametype:String) {
-        var highscores:[Int:[String]]
+        var highscores:[String:[String]]
         if gametype == "GoodGameplay" {
             highscores = game.getGoodHighscores()
         } else {

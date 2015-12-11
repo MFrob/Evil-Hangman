@@ -38,51 +38,11 @@ class FinishViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         let score = game.computeScore()
-        
-        scoreLabel.text = "Score: "+String(score[0])
-        madeMoneyLabel.text = "+$"+String(score[1])
-        
-        if game.wonGame() {
-            feedbackLabel.text = "Congratulations!"
-        } else {
-            feedbackLabel.text = "Try again"
-        }
-        if defaults.stringForKey("currentGameType")! == "GoodGameplay" {
-            titleLabel.text = "Good"
-        } else {
-            titleLabel.text = "Evil"
-        }
-        moneyLabel.text = "$"+String(game.getMoney())
+        setLabels(score)
         
         showDrawing()
-        displayLabel.text = game.getCorrectWord()
         if game.wonGame() && checkHighscore && game.checkHighscore(score[0]) {
-            print("New highscore!!")
-            var alertController:UIAlertController?
-            alertController = UIAlertController(title: "New Highscore!",
-                message: "Score: "+String(score[0]),
-                preferredStyle: .Alert)
-            
-            alertController!.addTextFieldWithConfigurationHandler(
-                {(textField: UITextField!) in
-                    textField.placeholder = "Enter name"
-            })
-            
-            let action = UIAlertAction(title: "Submit",
-                style: UIAlertActionStyle.Default,
-                handler: {[weak self]
-                    (paramAction:UIAlertAction!) in
-                    if let textFields = alertController?.textFields{
-                        let theTextFields = textFields as [UITextField]
-                        let enteredText = theTextFields[0].text
-                        self!.displayLabel.text = enteredText
-                    }
-                })
-            
-            alertController?.addAction(action)
-            self.presentViewController(alertController!,
-                animated: true,
-                completion: nil)
+            showHighscoreAlert(score[0])
         }
     }
     
@@ -92,7 +52,7 @@ class FinishViewController: UIViewController {
     
     @IBAction func playAgainAction(sender: AnyObject) {
         game.startNewGame()
-        self.performSegueWithIdentifier("playAgain", sender: sender)
+        self.performSegueWithIdentifier("game", sender: sender)
     }
     
     @IBAction func settings(sender: AnyObject) {
@@ -108,7 +68,7 @@ class FinishViewController: UIViewController {
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "playAgain" {
+        if segue.identifier == "game" {
             let destination = segue.destinationViewController as! GameViewController
             destination.game = game
         } else if segue.identifier == "menu" {
@@ -153,5 +113,51 @@ class FinishViewController: UIViewController {
         default:
             break
         }
+    }
+    
+    private func showHighscoreAlert(score:Int) {
+        var alertController:UIAlertController?
+        alertController = UIAlertController(title: "New Highscore!",
+            message: "Score: "+String(score),
+            preferredStyle: .Alert)
+        
+        alertController!.addTextFieldWithConfigurationHandler(
+            {(textField: UITextField!) in
+                textField.placeholder = "Enter name"
+        })
+        
+        let action = UIAlertAction(title: "Submit", style: .Default, handler: {[weak self] (paramAction:UIAlertAction!) in
+            if let textFields = alertController?.textFields {
+                let theTextFields = textFields as [UITextField]
+                let name = theTextFields[0].text
+                self!.game.addHighscore(String(score), name: name!)
+            }
+        })
+        
+        alertController?.addAction(action)
+        dispatch_async(dispatch_get_main_queue(), {
+            self.presentViewController(alertController!, animated: true, completion: nil)
+        })
+    }
+    
+    private func setLabels(score:[Int]) {
+        scoreLabel.text = "Score: "+String(score[0])
+        madeMoneyLabel.text = "+$"+String(score[1])
+        
+        if game.wonGame() {
+            feedbackLabel.text = "Congratulations!"
+        } else {
+            feedbackLabel.text = "Try again"
+        }
+        
+        if defaults.stringForKey("currentGameType")! == "GoodGameplay" {
+            titleLabel.text = "Good"
+        } else {
+            titleLabel.text = "Evil"
+        }
+        
+        moneyLabel.text = "$"+String(game.getMoney())
+        
+        displayLabel.text = game.getCorrectWord()
     }
 }

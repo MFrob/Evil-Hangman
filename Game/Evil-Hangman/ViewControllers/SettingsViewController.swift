@@ -20,15 +20,9 @@ class SettingsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         moneyLabel.text = "$"+String(game.getMoney())
-        if game.getCurrentGameType() == "GoodGameplay" && game.getGameTypeChanged() {
-            gameTypeOutlet.selectedSegmentIndex = 1
-        } else if game.getCurrentGameType() == "EvilGameplay" && !game.getGameTypeChanged() {
-            gameTypeOutlet.selectedSegmentIndex = 1
-        } else {
-            gameTypeOutlet.selectedSegmentIndex = 0
-        }
-        maxWordLengthDisplay.text = String(game.getMaxWordLength())
-        maxWordLengthOutlet.value = Float(game.getMaxWordLength())
+        
+        initiateSegmentedControl()
+        initiateSlider()
     }
     
     override func didReceiveMemoryWarning() {
@@ -56,5 +50,20 @@ class SettingsViewController: UIViewController {
             let destination = segue.destinationViewController as! FinishViewController
             destination.game = game
         }
+    }
+    
+    private func initiateSegmentedControl() {
+        if game.getCurrentGameType() == "GoodGameplay" && game.getGameTypeChanged() {
+            gameTypeOutlet.selectedSegmentIndex = 1
+        } else if game.getCurrentGameType() == "EvilGameplay" && !game.getGameTypeChanged() {
+            gameTypeOutlet.selectedSegmentIndex = 1
+        } else {
+            gameTypeOutlet.selectedSegmentIndex = 0
+        }
+    }
+    
+    private func initiateSlider() {
+        maxWordLengthDisplay.text = String(game.getMaxWordLength())
+        maxWordLengthOutlet.value = Float(game.getMaxWordLength())
     }
 }
