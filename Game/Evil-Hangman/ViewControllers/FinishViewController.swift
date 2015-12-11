@@ -5,7 +5,7 @@
 //  Created by Mees Fröberg on 02/12/15.
 //  Copyright © 2015 Mees Fröberg. All rights reserved.
 //
-// The ViewController of the finish screen. In this screen the user finished 
+// This is the ViewController of the finish screen. In this screen the user finished 
 // a game and the results of his game will be displayed.
 
 import UIKit
