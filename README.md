@@ -1,5 +1,10 @@
+Made by:<br/>
 Mees Fröberg <mees.froberg@student.uva.nl><br/>
 Studentnumber: 10559949
+
+Installation<br/>
+Step 1. Install xcode on your pc.
+Step 2. 
 
 Evil-Hangman - In this project a version of a hangman game is implemented. This version contains two types of gameplay. One of the types is the so called "good gameplay", this type is just the traditional hangman game. The other gameplay that an be played is the "evil gameplay". In this gameplay the app cleverly selects a word that minimizes the chance that the user correctly guesses the word.
 
